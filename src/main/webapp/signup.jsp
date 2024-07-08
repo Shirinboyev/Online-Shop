@@ -166,11 +166,19 @@
         <div class="form-container">
             <h1>Create an account</h1>
             <form action="/register" method="post">
+
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" name="fullname" required>
+
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" required>
 
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>
+
+                <label for="age">Email</label>
+                <input type="number" id="age" name="age" required>
+
 
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>

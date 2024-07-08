@@ -167,13 +167,18 @@
             <h1>Log In to Exclusive</h1>
             <form action="//login" method="post">
 
-                <label for="email">Email or Phone Number</label>
+                <label for="email">Email </label>
                 <input type="email" id="email" name="email" required>
 
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
 
-                <button type="submit">SignIn</button>
+                <label for="prePassword">Pre Password</label>
+                <input type="password" id="prePassword" name="prePassword" readonly>
+
+                <a href="/enterCode">
+                    <button type="submit">Sign In</button>
+                </a>
             </form>
             <div class="social-login">
                 <button><i class="fab fa-google"></i> Sign up with Google</button>
