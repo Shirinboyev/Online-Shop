@@ -11,9 +11,9 @@ import java.security.Timestamp;
 @NoArgsConstructor
 @Builder
 public class Orders {
-    private int orderId;
-    private int userId;
-    private Timestamp orderDate;
-    private double totalAmount;
+    private int id;
+    private int count;
+    private int productId;
+    private int basketId;
 
 }

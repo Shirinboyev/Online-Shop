@@ -156,7 +156,7 @@
         <a href="/">Home</a>
         <a href="#">Contact</a>
         <a href="#">About</a>
-        <a href="/register.jsp">Sign Up</a>
+        <a href="/signup.jsp">Sign Up</a>
     </nav>
 </div>
 
@@ -178,7 +178,7 @@
             <div class="social-login">
                 <button><i class="fab fa-google"></i> Sign up with Google</button>
             </div>
-            <p>if you like the account ? <a href="/register">Sign Up</a></p>
+            <p>if you like the account ? <a href="/signup">Sign Up</a></p>
         </div>
     </div>
 </div>

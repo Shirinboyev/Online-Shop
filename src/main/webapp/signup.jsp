@@ -156,7 +156,7 @@
         <a href="/">Home</a>
         <a href="#">Contact</a>
         <a href="#">About</a>
-        <a href="/register.jsp">Sign Up</a>
+        <a href="/login.jsp">LogIn</a>
     </nav>
 </div>
 
@@ -172,17 +172,11 @@
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>
 
-                <label for="phoneNumber">Phone Number</label>
-                <input type="tel" id="phoneNumber" name="phoneNumber" required>
-
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
 
                 <label for="prePassword" >PrePassword</label>
                 <input type="password" id="prePassword" name="prePassword" required>
-
-                <label for="address" > Address</label>
-                <input type="text" id="address" name="address" required>
 
                 <button type="submit">Create Account</button>
             </form>

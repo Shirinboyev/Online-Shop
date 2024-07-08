@@ -1,32 +1,21 @@
 package uz.pdp.lesson.model.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class User {
     private int id;
+    private String fullname;
     private String username;
     private String email;
     private String password;
-    private String phoneNumber;
-    private String address;
+    private Date birthday;
     private String Role;
 
-    public User(int id, String username,String email, String phoneNumber, String address,String password) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.password = password;
-    }
-
-    public User(int id, String username, String email, String userPassword) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = userPassword;
-    }
 }
