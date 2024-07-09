@@ -79,9 +79,13 @@
             border: 1px solid #e0e0e0;
             border-radius: 8px;
             overflow: hidden;
-            width: 200px;
+            width: 200px; // 5 ta maxsulotdan keyin yangi qatorga otish 200 / 4 = 5
             text-align: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding-bottom: 10px;
         }
 
         .product-card img {
@@ -92,6 +96,10 @@
 
         .product-card .product-info {
             padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .product-card .product-info h3 {
@@ -106,7 +114,7 @@
 
         .product-card .product-info .price {
             font-size: 1.2em;
-            color: #4CAF50; /* Green color for the price */
+            color: #4CAF50;
             margin-bottom: 10px;
         }
 
@@ -135,20 +143,13 @@
             font-size: 0.9em;
         }
 
-        .single-row {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            justify-content: space-between;
-            gap: 20px;
-        }
     </style>
 </head>
 <body>
 <header class="header">
     <div class="container">
         <div class="logo">
-            <a href="/">Online Shop </a>
+            Online Shop
         </div>
         <nav class="nav">
             <a href="/login">Login</a>
@@ -162,48 +163,58 @@
     <input type="text" placeholder="Search for products and categories">
 </div>
 
-<section class="products single-row">
+<section class="products">
     <div class="product-card">
         <img src="images/oyoqKiyim.jpg" alt="Product 1">
         <div class="product-info">
             <h3>Yozgi oyoq kiyim</h3>
-            <div class="price">99,000 UZS</div>
-            <a href="#" class="btn">Add to Cart</a>
+            <div>
+                <div class="price">99,000 UZS</div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
         </div>
     </div>
     <div class="product-card">
         <img src="images/kepka.jpg" alt="Product 2">
         <div class="product-info">
             <h3>Quyoshdan ximoya uchun kepka</h3>
-            <div class="price">59,000 UZS</div>
-            <a href="#" class="btn">Add to Cart</a>
+            <div>
+                <div class="price">59,000 UZS</div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
         </div>
     </div>
     <div class="product-card">
         <img src="images/anorsuv.jpg" alt="Product 3">
         <div class="product-info">
             <h3>Anor suvi</h3>
-            <div class="price">12,000 UZS</div>
-            <a href="#" class="btn">Add to Cart</a>
+            <div>
+                <div class="price">12,000 UZS</div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
         </div>
     </div>
     <div class="product-card">
         <img src="images/mishka.png" alt="Product 4">
         <div class="product-info">
             <h3>Komputer uchun mishka</h3>
-            <div class="price">139,000 UZS</div>
-            <a href="#" class="btn">Add to Cart</a>
+            <div>
+                <div class="price">139,000 UZS</div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
         </div>
     </div>
     <div class="product-card">
         <img src="images/kiyim.jpg" alt="Product 5">
         <div class="product-info">
             <h3>Boshdan oyoq sarpo</h3>
-            <div class="price">199,000 UZS</div>
-            <a href="#" class="btn">Add to Cart</a>
+            <div>
+                <div class="price">199,000 UZS</div>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
         </div>
     </div>
-    <!-- Add more products as needed -->
+
 </section>
 
 <footer class="footer">

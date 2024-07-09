@@ -165,8 +165,7 @@
         <img src="https://st3.depositphotos.com/13194036/31763/i/450/depositphotos_317633680-stock-photo-cropped-view-woman-holding-toy.jpg" alt="src/main/webapp/images/signUpImage.jpg">
         <div class="form-container">
             <h1>Create an account</h1>
-            <form action="/register" method="post">
-
+            <form action="/signup" method="post">
                 <label for="fullname">Full Name</label>
                 <input type="text" id="fullname" name="fullname" required>
 
@@ -176,14 +175,13 @@
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>
 
-                <label for="age">Email</label>
+                <label for="age">Age</label>
                 <input type="number" id="age" name="age" required>
-
 
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
 
-                <label for="prePassword" >PrePassword</label>
+                <label for="prePassword">PrePassword</label>
                 <input type="password" id="prePassword" name="prePassword" required>
 
                 <button type="submit">Create Account</button>
@@ -192,6 +190,7 @@
                 <button><i class="fab fa-google"></i> Sign up with Google</button>
             </div>
             <p>Already have an account? <a href="/login">Log in</a></p>
+            <p style="color: red;"><%= request.getAttribute("message") != null ? request.getAttribute("message") : "" %></p>
         </div>
     </div>
 </div>

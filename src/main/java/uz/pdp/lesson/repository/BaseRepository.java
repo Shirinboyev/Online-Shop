@@ -5,7 +5,7 @@ import uz.pdp.lesson.model.user.User;
 import java.util.List;
 
 public interface BaseRepository<M> {
-     String URL = "jdbc:postgresql://localhost:5432/shopping_platform";
+     String URL = "jdbc:postgresql://localhost:5432/shopping";
      String USER = "postgres";
      String PASSWORD = "1111";
 

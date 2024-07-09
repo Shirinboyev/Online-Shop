@@ -21,37 +21,38 @@ public class LogInServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    String email = req.getParameter("email");
-    String password = req.getParameter("password");
-    String prePassword = req.getParameter("prePassword");
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
+        String prePassword = req.getParameter("prePassword");
 
-    HttpSession session = req.getSession();
-        User user = userService.login(email, password,prePassword);
+        User user = userService.login(email, password, prePassword);
 
-        PrintWriter writer = resp.getWriter();
+        HttpSession session = req.getSession();
+        if (user != null) {
+            session.setAttribute("user", user.getId());
+            Cookie cookie = new Cookie("JSESSIONID", session.getId());
+            cookie.setMaxAge(60 * 60 * 24 * 7);
+            resp.addCookie(cookie);
 
-    String id = session.getId();
-        Cookie cookie = new Cookie("JSESSIONID",id);
-        cookie.setMaxAge(60*60*24*7);
-        resp.addCookie(cookie);
-
-        if(password.equals(prePassword)){
-            if(user!=null){
-                if(user.getRole().equals("ADMIN")){
-                    session.setAttribute("user",user.getId());
+            switch (user.getRole()) {
+                case "ADMIN":
                     resp.sendRedirect("/adminProfile.jsp");
-                }
-                else if(user.getRole().equals("CONSUMER")){
-                    session.setAttribute("user",user.getId());
+                    break;
+                case "USER":
+                    resp.sendRedirect("/userProfile.jsp");
+                    break;
+                case "CUSTOMER":
+                    resp.sendRedirect("/customerProfile.jsp");
+                    break;
+                default:
                     resp.sendRedirect("/");
-                }
-                else if(user.getRole().equals("CUSTOMER")){
-                    session.setAttribute("user",user.getId());
-                    resp.sendRedirect("/customer.jsp");
-                }
+                    break;
             }
+        } else {
+            resp.getWriter().println("Invalid email or password.");
+            resp.setHeader("Refresh", "2; URL=/login.jsp");
         }
-
+    }
     }
 
-}
+

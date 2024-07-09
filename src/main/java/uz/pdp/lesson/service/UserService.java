@@ -1,9 +1,7 @@
 package uz.pdp.lesson.service;
 
-
 import uz.pdp.lesson.model.user.User;
 import uz.pdp.lesson.repository.UserRepository;
-
 
 import java.util.List;
 
@@ -11,26 +9,24 @@ public class UserService implements BaseService {
     private static UserService instance;
     private UserRepository userRepository = new UserRepository();
 
-@Override
-public User login(String email, String password ,String prePassword ) {
-    List<User> users = userRepository.getAll();
-    if(password.equals(prePassword)) {
+    @Override
+    public User login(String email, String password, String prePassword) {
+        List<User> users = userRepository.getAll();
         for (User user : users) {
-            if(user.getEmail().equals(email) && user.getPassword().equals(password)) {
+            if (user.getEmail().equals(email) && user.getPassword().equals(password) && password.equals(prePassword)) {
                 return user;
             }
         }
+        return null;
     }
-    return null;
-  }
 
     @Override
     public String signup(String fullname, String username, String email, String password, String prePassword, int age) {
         List<User> users = userRepository.getAll();
-        if(password.equals(prePassword)) {
+        if (password.equals(prePassword)) {
             for (User user : users) {
-                if(user.getUsername().equals(username) && user.getEmail().equals(email) && user.getPassword().equals(password)) {
-                    return"User already exists";
+                if (user.getEmail().equals(email) || user.getUsername().equals(username)) {
+                    return "User already exists";
                 }
             }
             User user = new User();
@@ -38,12 +34,13 @@ public User login(String email, String password ,String prePassword ) {
             user.setUsername(username);
             user.setEmail(email);
             user.setPassword(password);
-            user.setPrePassword(prePassword);
             user.setAge(age);
+    //      user.setRole("USER");
+
             userRepository.save(user);
             return "User added";
-        }else {
-            return "Wrong password";
+        } else {
+            return "Passwords do not match";
         }
     }
 

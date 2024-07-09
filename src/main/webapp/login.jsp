@@ -165,7 +165,7 @@
         <img src="https://st3.depositphotos.com/13194036/31763/i/450/depositphotos_317633680-stock-photo-cropped-view-woman-holding-toy.jpg" alt="src/main/webapp/images/signUpImage.jpg">
         <div class="form-container">
             <h1>Log In to Exclusive</h1>
-            <form action="//login" method="post">
+            <form action="/login" method="post">
 
                 <label for="email">Email </label>
                 <input type="email" id="email" name="email" required>
@@ -174,7 +174,7 @@
                 <input type="password" id="password" name="password" required>
 
                 <label for="prePassword">Pre Password</label>
-                <input type="password" id="prePassword" name="prePassword" readonly>
+                <input type="password" id="prePassword" name="prePassword" required>
 
                 <a href="/enterCode">
                     <button type="submit">Sign In</button>
