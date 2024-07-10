@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import uz.pdp.lesson.enums.UserRole;
 import uz.pdp.lesson.service.UserService;
 
 import java.io.IOException;
@@ -27,8 +28,8 @@ public class SignUpServlet extends HttpServlet {
         String password = req.getParameter("password");
         String prePassword = req.getParameter("prePassword");
         int age = Integer.parseInt(req.getParameter("age"));
-
-        String result = userService.signup(fullname, username, email, password, prePassword, age);
+        UserRole userRole = UserRole.valueOf(req.getParameter("UserRole"));
+        String result = userService.signup(fullname, username, email, password, prePassword, age, userRole);
         PrintWriter writer = resp.getWriter();
 
         if ("User added".equals(result)) {

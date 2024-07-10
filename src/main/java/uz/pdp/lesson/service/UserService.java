@@ -1,5 +1,6 @@
 package uz.pdp.lesson.service;
 
+import uz.pdp.lesson.enums.UserRole;
 import uz.pdp.lesson.model.user.User;
 import uz.pdp.lesson.repository.UserRepository;
 
@@ -9,7 +10,7 @@ public class UserService implements BaseService {
     private static UserService instance;
     private UserRepository userRepository = new UserRepository();
 
-    @Override
+
     public User login(String email, String password, String prePassword) {
         List<User> users = userRepository.getAll();
         for (User user : users) {
@@ -20,8 +21,7 @@ public class UserService implements BaseService {
         return null;
     }
 
-    @Override
-    public String signup(String fullname, String username, String email, String password, String prePassword, int age) {
+    public String signup(String fullname, String username, String email, String password, String prePassword, int age, UserRole userRole) {
         List<User> users = userRepository.getAll();
         if (password.equals(prePassword)) {
             for (User user : users) {
@@ -35,7 +35,7 @@ public class UserService implements BaseService {
             user.setEmail(email);
             user.setPassword(password);
             user.setAge(age);
-            user.setRole("CUSTOMER");
+            user.setRole(String.valueOf(userRole));
 
             userRepository.save(user);
             return "User added";

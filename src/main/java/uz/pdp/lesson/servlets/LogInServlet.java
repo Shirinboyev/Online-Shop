@@ -42,7 +42,7 @@ public class LogInServlet extends HttpServlet {
                 case ADMIN:
                     resp.sendRedirect("/adminProfile.jsp");
                     break;
-                case USER:
+                case VENDOR:
                     resp.sendRedirect("/userProfile.jsp");
                     break;
                 case CUSTOMER:

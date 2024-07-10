@@ -9,6 +9,7 @@ public interface BaseRepository<M> {
      String USER = "postgres";
      String PASSWORD = "1111";
 
+
     void save(M m);
     M get(Integer id);
     boolean delete(Integer id);

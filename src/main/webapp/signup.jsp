@@ -45,6 +45,12 @@
                 <label for="prePassword">PrePassword</label>
                 <input type="password" id="prePassword" name="prePassword" required>
 
+                <label for="user_type">Choose User Type:</label>
+                <select id="user_type" name="UserRole" required>
+                    <option value="CUSTOMER">Customer</option>
+                    <option value="VENDOR">Vendor</option>
+                </select><br><br>
+
                 <button type="submit">Create Account</button>
             </form>
             <div class="social-login">

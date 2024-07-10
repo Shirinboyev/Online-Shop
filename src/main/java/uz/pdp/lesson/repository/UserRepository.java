@@ -1,5 +1,6 @@
 package uz.pdp.lesson.repository;
 
+import org.postgresql.Driver;
 import uz.pdp.lesson.model.user.User;
 
 import java.sql.*;
@@ -10,16 +11,27 @@ public class UserRepository implements BaseRepository<User> {
 
     @Override
     public void save(User user) {
+        try {
+            Class.forName("org.postgresql.Driver"); // Register the driver
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("PostgreSQL JDBC Driver not found. Include it in your library path.", e);
+        }
+
         String query = "INSERT INTO users (fullname, username, password, email, age, role) VALUES (?, ?, ?, ?, ?, ?)";
+
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(query)) {
+
             statement.setString(1, user.getFullname());
             statement.setString(2, user.getUsername());
             statement.setString(3, user.getPassword());
             statement.setString(4, user.getEmail());
             statement.setInt(5, user.getAge());
             statement.setString(6, user.getRole());
-            statement.executeUpdate();
+
+            statement.execute();
+            System.out.println("User inserted successfully.");
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
