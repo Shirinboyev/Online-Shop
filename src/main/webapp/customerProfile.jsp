@@ -1,21 +1,51 @@
+<%@ page import="uz.pdp.lesson.model.market.Market" %>
+<%@ page import="java.util.List" %>
+<%@ page import="uz.pdp.lesson.model.user.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Customer Profile</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/customerProfile.css">
 </head>
 <body>
-<h1>Welcome to Your Profile</h1>
+<div>
+    <a href="/">
+        <h1>want to shop ?</h1>
+    </a>
+</div>
+<div class="container">
+    <% User user = (User) request.getAttribute("user"); %>
+    <h1>Welcome to Your Profile, <%= user != null ? user.getFullname() : "Guest" %></h1>
 
-<h2>Create a New Market</h2>
-<form action="/customerProfile" method="post">
-    <label for="marketName">Market Name: </label>
-    <input type="text" id="marketName" name="marketName"  required>
-    <button type="submit">Create Market</button>
-</form>
+    <h2>Create a New Market</h2>
+    <form action="${pageContext.request.contextPath}/customerProfile" method="post">
+        <input type="hidden" name="action" value="createMarket">
+        <label for="marketName">Market Name: </label>
+        <input type="text" id="marketName" name="marketName" required>
+        <button type="submit">Create Market</button>
+    </form>
 
-<% if (request.getAttribute("result") != null) { %>
-<p><%= request.getAttribute("result") %></p>
-<% } %>
+    <% if (request.getAttribute("result") != null) { %>
+    <p><%= request.getAttribute("result") %></p>
+    <% } %>
+
+    <h2>Your Markets</h2>
+    <% if (request.getAttribute("markets") != null) { %>
+    <div class="market-list">
+        <% for (Market market : (List<Market>) request.getAttribute("markets")) { %>
+        <div class="market-item">
+            <form action="${pageContext.request.contextPath}/marketProducts" method="get">
+                <input type="hidden" name="marketId" value="<%= market.getId() %>">
+                <button type="submit"><%= market.getName() %></button>
+            </form>
+        </div>
+        <% } %>
+    </div>
+    <% } else { %>
+    <p>No markets created yet.</p>
+    <% } %>
+</div>
 </body>
 </html>

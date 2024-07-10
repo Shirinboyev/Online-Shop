@@ -10,4 +10,10 @@ public class Market {
     private int id;
     private String name;
     private int ownerId ;
+
+    public Market(int id, String name, int ownerId) {
+        this.id = id;
+        this.name = name;
+        this.ownerId = ownerId;
+    }
 }

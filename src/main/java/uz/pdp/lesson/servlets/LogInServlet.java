@@ -14,10 +14,10 @@ import uz.pdp.lesson.service.UserService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
-
-@WebServlet(name = "Login",urlPatterns = "/login")
+@WebServlet(name = "Login", urlPatterns = "/login")
 public class LogInServlet extends HttpServlet {
     UserService userService = UserService.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("login.jsp").forward(req, resp);
@@ -33,7 +33,7 @@ public class LogInServlet extends HttpServlet {
 
         HttpSession session = req.getSession();
         if (user != null) {
-            session.setAttribute("user", user.getId());
+            session.setAttribute("user", user);  // User object set to session
             Cookie cookie = new Cookie("JSESSIONID", session.getId());
             cookie.setMaxAge(60 * 60 * 24 * 7);
             resp.addCookie(cookie);
@@ -42,7 +42,7 @@ public class LogInServlet extends HttpServlet {
                 case ADMIN:
                     resp.sendRedirect("/adminProfile.jsp");
                     break;
-                case CONSUMER:
+                case USER:
                     resp.sendRedirect("/userProfile.jsp");
                     break;
                 case CUSTOMER:
@@ -57,6 +57,6 @@ public class LogInServlet extends HttpServlet {
             resp.setHeader("Refresh", "2; URL=/login.jsp");
         }
     }
-    }
+}
 
 

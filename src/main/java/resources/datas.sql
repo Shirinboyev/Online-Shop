@@ -73,3 +73,6 @@ create table verification (
 );
 
 alter table verification add constraint fk_users_verification foreign key (user_id) references users(id);
+
+
+select * from market

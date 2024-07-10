@@ -35,7 +35,7 @@ public class UserService implements BaseService {
             user.setEmail(email);
             user.setPassword(password);
             user.setAge(age);
-          user.setRole("USER");
+            user.setRole("CUSTOMER");
 
             userRepository.save(user);
             return "User added";
