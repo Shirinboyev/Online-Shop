@@ -4,222 +4,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/homePage.css">
     <title>Online Shop - Home</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+    <script>
+        function addToCart(productId) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "${pageContext.request.contextPath}/addToCart", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        alert("Mahsulot savatchaga qo'shildi!");
+                    } else if (xhr.status === 401) {
+                        alert("Iltimos, tizimga kiring.");
+                        window.location.href = "${pageContext.request.contextPath}/login";
+                    } else {
+                        alert("Mahsulotni savatchaga qo'shishda xatolik yuz berdi.");
+                    }
+                }
+            };
+            xhr.send("productId=" + productId);
         }
+    </script>
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .header {
-            background-color: #3f51b5;
-            color: #fff;
-            padding: 15px 0;
-        }
-
-        .header .logo {
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-
-        .header .nav {
-            display: flex;
-            gap: 20px;
-        }
-
-        .header .nav a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .header .nav a:hover {
-            text-decoration: underline;
-        }
-
-        .search-bar {
-            margin: 20px 0;
-            display: flex;
-            justify-content: center;
-        }
-
-        .search-bar input {
-            width: 50%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .products {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            padding: 20px 0;
-        }
-
-        .product-card {
-            background-color: #fff;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            overflow: hidden;
-            width: 200px; // 5 ta maxsulotdan keyin yangi qatorga otish 200 / 4 = 5
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding-bottom: 10px;
-        }
-
-        .product-card img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
-
-        .product-card .product-info {
-            padding: 15px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .product-card .product-info h3 {
-            font-size: 1.1em;
-            margin-bottom: 10px;
-        }
-
-        .product-card .product-info p {
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        .product-card .product-info .price {
-            font-size: 1.2em;
-            color: #4CAF50;
-            margin-bottom: 10px;
-        }
-
-        .product-card .product-info .btn {
-            background-color: #3f51b5;
-            color: #fff;
-            padding: 10px;
-            text-decoration: none;
-            border-radius: 4px;
-            display: inline-block;
-            transition: background-color 0.3s;
-        }
-
-        .product-card .product-info .btn:hover {
-            background-color: #303f9f;
-        }
-
-        .footer {
-            background-color: #3f51b5;
-            color: #fff;
-            text-align: center;
-            padding: 20px 0;
-        }
-
-        .footer p {
-            font-size: 0.9em;
-        }
-
-    </style>
 </head>
 <body>
 <header class="header">
     <div class="container">
         <div class="logo">
-            Online Shop
+            ONLINE MARKET
         </div>
         <nav class="nav">
+            <a href="catalog.jsp" class="btn">Katalog</a>
+            <a href="/userProfile">Savat</a>
             <a href="/login">Login</a>
             <a href="/signup">Register</a>
-            <a href="/orders">Orders</a>
         </nav>
     </div>
 </header>
 
 <div class="search-bar">
-    <input type="text" placeholder="Search for products and categories">
+    <input type="text" placeholder="Mahsulotlar va turkumlar izlash">
 </div>
+
+<h1 style="padding-left: 30px">Tavsiyalar</h1>
 
 <section class="products">
     <div class="product-card">
-        <img src="images/oyoqKiyim.jpg" alt="Product 1">
+        <img src="${pageContext.request.contextPath}/images/oyoqKiyim.jpg" alt="Product 1">
         <div class="product-info">
             <h3>Yozgi oyoq kiyim</h3>
             <div>
                 <div class="price">99,000 UZS</div>
-                <a href="#" class="btn">Add to Cart</a>
+                <button class="btn" onclick="addToCart(1)">Savatchaga qo'shish</button>
             </div>
         </div>
     </div>
-    <div class="product-card">
-        <img src="images/kepka.jpg" alt="Product 2">
-        <div class="product-info">
-            <h3>Quyoshdan ximoya uchun kepka</h3>
-            <div>
-                <div class="price">59,000 UZS</div>
-                <a href="#" class="btn">Add to Cart</a>
-            </div>
-        </div>
-    </div>
-    <div class="product-card">
-        <img src="images/anorsuv.jpg" alt="Product 3">
-        <div class="product-info">
-            <h3>Anor suvi</h3>
-            <div>
-                <div class="price">12,000 UZS</div>
-                <a href="#" class="btn">Add to Cart</a>
-            </div>
-        </div>
-    </div>
-    <div class="product-card">
-        <img src="images/mishka.png" alt="Product 4">
-        <div class="product-info">
-            <h3>Komputer uchun mishka</h3>
-            <div>
-                <div class="price">139,000 UZS</div>
-                <a href="#" class="btn">Add to Cart</a>
-            </div>
-        </div>
-    </div>
-    <div class="product-card">
-        <img src="images/kiyim.jpg" alt="Product 5">
-        <div class="product-info">
-            <h3>Boshdan oyoq sarpo</h3>
-            <div>
-                <div class="price">199,000 UZS</div>
-                <a href="#" class="btn">Add to Cart</a>
-            </div>
-        </div>
-    </div>
-
+    <!-- Add other products similarly -->
 </section>
 
 <footer class="footer">
     <div class="container">
-        <p>&copy; 2024 Online Shop. All rights reserved.</p>
+        <p>&copy; 2024 Uzum Market. Barcha huquqlar himoyalangan.</p>
     </div>
 </footer>
 </body>

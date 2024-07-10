@@ -4,6 +4,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import lombok.Data;
+import uz.pdp.lesson.enums.BasketStatus;
+import uz.pdp.lesson.enums.Categories;
+import uz.pdp.lesson.enums.UserRole;
+import uz.pdp.lesson.model.basket.Basket;
 import uz.pdp.lesson.model.user.User;
 import uz.pdp.lesson.service.UserService;
 
@@ -34,14 +38,14 @@ public class LogInServlet extends HttpServlet {
             cookie.setMaxAge(60 * 60 * 24 * 7);
             resp.addCookie(cookie);
 
-            switch (user.getRole()) {
-                case "ADMIN":
+            switch (UserRole.valueOf(user.getRole())) {
+                case ADMIN:
                     resp.sendRedirect("/adminProfile.jsp");
                     break;
-                case "USER":
+                case CONSUMER:
                     resp.sendRedirect("/userProfile.jsp");
                     break;
-                case "CUSTOMER":
+                case CUSTOMER:
                     resp.sendRedirect("/customerProfile.jsp");
                     break;
                 default:

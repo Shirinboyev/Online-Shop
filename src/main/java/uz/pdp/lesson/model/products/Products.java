@@ -5,13 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Ptoducts {
+public class Products {
     private int id;
     private String name;
     private int productId;
@@ -19,7 +20,13 @@ public class Ptoducts {
     private String description;
     private int count;
     private int categoryId;
-    private Timestamp create_date;
+    private Timestamp createDate;
     private String imageUrl;
     private int marketId;
+
+    public Products(int id, String yozgiOyoqKiyim, double price) {
+        this.id = id;
+        this.name = yozgiOyoqKiyim;
+        this.price = price;
+    }
 }
