@@ -6,24 +6,20 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import uz.pdp.lesson.model.cart.CartItem;
-import uz.pdp.lesson.model.products.Products;
+
 import uz.pdp.lesson.model.user.User;
-import uz.pdp.lesson.repository.CartItemRepository;
 import uz.pdp.lesson.repository.ProductsRepository;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @WebServlet("/userProfile")
 public class UserProfileServlet extends HttpServlet {
-    private CartItemRepository cartRepo;
+
     private ProductsRepository productsRepository;
 
     @Override
     public void init() throws ServletException {
-        cartRepo = new CartItemRepository();
+
         productsRepository = new ProductsRepository();
     }
 
@@ -36,17 +32,9 @@ public class UserProfileServlet extends HttpServlet {
             return;
         }
 
-        List<CartItem> cartItems = cartRepo.getCartItemsByUserId(user.getId());
-        List<Products> productsInCart = new ArrayList<>();
-        for (CartItem cartItem : cartItems) {
-            Products product = productsRepository.getProductById(cartItem.getProductId());
-            if (product != null) {
-                productsInCart.add(product);
-            }
-        }
 
-        request.setAttribute("cartItems", productsInCart);
-        request.getRequestDispatcher("userProfile.jsp").forward(request, response);
+//        request.setAttribute("cartItems", );
+//        request.getRequestDispatcher("userProfile.jsp").forward(request, response);
     }
 
     @Override
