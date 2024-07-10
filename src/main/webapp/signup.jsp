@@ -6,6 +6,73 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/signupPage.css">
     <title>Create an Account</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-section {
+            display: flex;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container {
+            margin-left: 20px;
+        }
+        .form-container h1 {
+            margin-bottom: 20px;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .password-container {
+            position: relative;
+        }
+        .password-container input {
+            padding-right: 30px;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        .social-login button {
+            background-color: #4285F4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .social-login button i {
+            margin-right: 8px;
+        }
+        .social-login {
+            margin-top: 20px;
+        }
+        .social-login button:hover {
+            background-color: #357ae8;
+        }
+        p {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 
@@ -28,22 +95,28 @@
             <h1>Create an account</h1>
             <form action="/signup" method="post">
                 <label for="fullname">Full Name</label>
-                <input type="text" id="fullname" name="fullname" required>
+                <input type="text" id="fullname" name="fullname" placeholder="Enter fullname" required>
 
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="username" name="username"  placeholder="Enter username" required>
 
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" placeholder="Enter email" required>
 
                 <label for="age">Age</label>
-                <input type="number" id="age" name="age" required>
+                <input type="number" id="age" name="age"  placeholder="Enter Age" required>
 
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+                <div class="password-container">
+                    <input type="password" id="password" name="password"  placeholder="Enter password" required>
+                    <i class="far fa-eye toggle-password" title="Show Password"></i>
+                </div>
 
                 <label for="prePassword">PrePassword</label>
-                <input type="password" id="prePassword" name="prePassword" required>
+                <div class="password-container">
+                    <input type="password" id="prePassword" name="prePassword" placeholder="Enter PrePassword" required>
+                    <i class="far fa-eye toggle-password" title="Show Password"></i>
+                </div>
 
                 <label for="user_type">Choose User Type:</label>
                 <select id="user_type" name="UserRole" required>
@@ -61,7 +134,18 @@
         </div>
     </div>
 </div>
-
+<script>
+    document.querySelectorAll('.toggle-password').forEach(item => {
+        item.addEventListener('click', function () {
+            const passwordField = this.previousElementSibling;
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+            this.setAttribute('title', type === 'password' ? 'Show Password' : 'Hide Password');
+        });
+    });
+</script>
 <div class="footer">
     <div class="container">
         <div class="column">

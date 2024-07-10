@@ -7,7 +7,7 @@ import java.util.List;
 public interface BaseRepository<M> {
      String URL = "jdbc:postgresql://localhost:5432/shopping";
      String USER = "postgres";
-     String PASSWORD = "1111";
+     String PASSWORD = "123";
 
 
     void save(M m);
