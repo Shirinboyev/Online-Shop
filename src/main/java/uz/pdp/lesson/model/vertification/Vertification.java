@@ -1,7 +1,14 @@
 package uz.pdp.lesson.model.vertification;
 
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@Data
+
 public class Vertification {
-    int id;
-    String send_code;
-    int user_id;
+    private Integer id;
+    private String send_code;
+    private Integer user_id;
 }

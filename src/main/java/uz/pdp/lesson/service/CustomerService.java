@@ -1,7 +1,6 @@
 package uz.pdp.lesson.service;
 
 import uz.pdp.lesson.model.market.Market;
-import uz.pdp.lesson.repository.CustomerRepository;
 
 import java.util.List;
 

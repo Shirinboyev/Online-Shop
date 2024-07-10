@@ -6,10 +6,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductsRepository {
-    String URL = "jdbc:postgresql://localhost:5432/shopping";
-    String USER = "postgres";
-    String PASSWORD = "1111";
+import static uz.pdp.lesson.repository.BaseRepository.*;
+
+public class ProductsRepository implements BaseRepository<Products> {
 
     public void save(Products product) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
@@ -28,6 +27,26 @@ public class ProductsRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Products get(Integer id) {
+        return null;
+    }
+
+    @Override
+    public boolean delete(Integer id) {
+        return false;
+    }
+
+    @Override
+    public List<Products> getAll() {
+        return List.of();
+    }
+
+    @Override
+    public boolean update(Products old, Products updated) {
+        return false;
     }
 
     public Products getProductById(int id) {

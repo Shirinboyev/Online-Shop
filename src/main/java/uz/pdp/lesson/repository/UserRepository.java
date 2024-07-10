@@ -7,14 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository implements BaseRepository<User> {
-    static {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            throw new IllegalStateException("Failed to load PostgreSQL JDBC driver.", e);
-        }
-    }
 
     @Override
     public void save(User user) {
@@ -27,7 +19,6 @@ public class UserRepository implements BaseRepository<User> {
             statement.setString(4, user.getEmail());
             statement.setInt(5, user.getAge());
             statement.setString(6, user.getRole());
-
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

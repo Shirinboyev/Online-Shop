@@ -6,10 +6,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartItemRepository {
-    private final String URL = "jdbc:mysql://localhost:3306/your_database";
-    private final String USER = "root";
-    private final String PASSWORD = "password";
+import static uz.pdp.lesson.repository.BaseRepository.*;
+
+public class CartItemRepository implements BaseRepository<CartItem> {
+
 
     public void addCartItem(CartItem cartItem) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
@@ -33,6 +33,26 @@ public class CartItemRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public CartItem get(Integer id) {
+        return null;
+    }
+
+    @Override
+    public boolean delete(Integer id) {
+        return false;
+    }
+
+    @Override
+    public List<CartItem> getAll() {
+        return List.of();
+    }
+
+    @Override
+    public boolean update(CartItem old, CartItem updated) {
+        return false;
     }
 
     public List<CartItem> getCartItemsByUserId(int userId) {
