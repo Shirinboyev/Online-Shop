@@ -103,4 +103,4 @@ create table verification
 alter table verification
     owner to postgres;
 
-SELECT * FROM users
+SELECT * FROM market
