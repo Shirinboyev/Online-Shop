@@ -19,7 +19,7 @@ public class Products {
     private double price;
     private String description;
     private int count;
-    private int categoryId;
+    private String category;
     private Timestamp createDate;
     private String imageUrl;
     private int marketId;

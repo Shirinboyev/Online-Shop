@@ -26,6 +26,7 @@ public class ProductService {
         product.setMarketId(marketId);
         product.setCount(productCount);
         product.setImageUrl(productImageUrl);
+        product.setCategory("Default");
         productsRepository.save(product);
     }
 }

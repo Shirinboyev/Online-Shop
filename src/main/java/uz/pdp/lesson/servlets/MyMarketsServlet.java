@@ -58,6 +58,6 @@ public class MyMarketsServlet extends HttpServlet {
             productService.addProduct(marketId, productName, productPrice, productDescription, productCount, productImageUrl);
         }
 
-        req.getRequestDispatcher("/myMarkets.jsp").forward(req, resp);
+        resp.sendRedirect("/home");
     }
 }
