@@ -71,7 +71,7 @@ create table product
             references market
 );
 
-alter table product
+    alter table product
     owner to postgres;
 
 create table orders
@@ -103,4 +103,4 @@ create table verification
 alter table verification
     owner to postgres;
 
-SELECT * FROM market
+select * from product

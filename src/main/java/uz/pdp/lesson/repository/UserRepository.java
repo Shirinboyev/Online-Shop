@@ -29,7 +29,6 @@ public class UserRepository implements BaseRepository<User> {
             statement.setString(4, user.getEmail());
             statement.setInt(5, user.getAge());
             statement.setString(6, user.getRole());
-
             statement.execute();
             System.out.println("User inserted successfully.");
 

@@ -10,24 +10,25 @@ import static uz.pdp.lesson.repository.BaseRepository.*;
 
 public class ProductsRepository implements BaseRepository<Products> {
 
-    public void save(Products product) {
+    public void save(Products products) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            String query = "INSERT INTO products (name, product_id, price, description, count, category_id, create_date, image_url, market_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO product (name, product_id, price, description, count, category_id, create_date, image_url, market_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, product.getName());
-            statement.setInt(2, product.getProductId());
-            statement.setDouble(3, product.getPrice());
-            statement.setString(4, product.getDescription());
-            statement.setInt(5, product.getCount());
-            statement.setInt(6, product.getCategoryId());
-            statement.setTimestamp(7, product.getCreateDate());
-            statement.setString(8, product.getImageUrl());
-            statement.setInt(9, product.getMarketId());
-            statement.executeUpdate();
+            statement.setString(1, products.getName());
+            statement.setInt(2, products.getProductId());
+            statement.setDouble(3, products.getPrice());
+            statement.setString(4, products.getDescription());
+            statement.setInt(5, products.getCount());
+            statement.setInt(6, products.getCategoryId());
+            statement.setTimestamp(7, products.getCreateDate());
+            statement.setString(8, products.getImageUrl());
+            statement.setInt(9, products.getMarketId());
+            statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public Products get(Integer id) {
@@ -43,7 +44,7 @@ public class ProductsRepository implements BaseRepository<Products> {
     public Products getProductById(int id) {
         Products product = null;
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            String query = "SELECT * FROM products WHERE id = ?";
+            String query = "SELECT * FROM product WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -70,7 +71,7 @@ public class ProductsRepository implements BaseRepository<Products> {
     public List<Products> getAllProducts() {
         List<Products> productsList = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            String query = "SELECT * FROM products";
+            String query = "SELECT * FROM product";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {

@@ -1,20 +1,31 @@
 package uz.pdp.lesson.service;
 
 import uz.pdp.lesson.model.products.Products;
-
-import java.util.ArrayList;
-import java.util.List;
+import uz.pdp.lesson.repository.ProductsRepository;
 
 public class ProductService {
-    private List<Products> products = new ArrayList<>();
+    private static ProductService productService;
+    private final ProductsRepository productsRepository;
 
-    public List<Products> getProductsByIds(List<Integer> productIds) {
-        List<Products> result = new ArrayList<>();
-        for (Products product : products) {
-            if (productIds.contains(product.getId())) {
-                result.add(product);
-            }
+    private ProductService() {
+        this.productsRepository = new ProductsRepository();
+    }
+
+    public static ProductService getInstance() {
+        if (productService == null) {
+            productService = new ProductService();
         }
-        return result;
+        return productService;
+    }
+
+    public void addProduct(int marketId, String productName, double productPrice, String productDescription, int productCount, String productImageUrl) {
+        Products product = new Products();
+        product.setName(productName);
+        product.setPrice(productPrice);
+        product.setDescription(productDescription);
+        product.setMarketId(marketId);
+        product.setCount(productCount);
+        product.setImageUrl(productImageUrl);
+        productsRepository.save(product);
     }
 }
