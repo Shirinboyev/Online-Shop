@@ -21,8 +21,9 @@ public class VendorService {
     }
 
     // Method to add a market
-    public void addMarket(Market market) {
+    public boolean addMarket(Market market) {
         marketRepository.save(market);
+        return true;
     }
 
     // Method to get markets by owner ID
@@ -31,7 +32,7 @@ public class VendorService {
     }
 
 
-    public List<Market> getMarketsByUserId(int id) {
-        return null;
+    public List<Market> getMarketsByUserId(int ownerId) {
+        return marketRepository.getMarketsByOwnerId(ownerId);
     }
 }

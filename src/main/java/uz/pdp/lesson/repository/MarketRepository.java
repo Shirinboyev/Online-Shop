@@ -9,6 +9,7 @@ import java.util.List;
 public class MarketRepository implements BaseRepository<Market>{
     @Override
     public void save(Market market) {
+        forDriver();
         String query = "INSERT INTO market (name, owner_id) VALUES (?, ?)";
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -19,7 +20,14 @@ public class MarketRepository implements BaseRepository<Market>{
             e.printStackTrace();
         }
     }
+    private void forDriver() {
+        try {
+            Class.forName("org.postgresql.Driver"); // Register the driver
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("PostgreSQL JDBC Driver not found. Include it in your library path.", e);
+        }
 
+    }
     @Override
     public Market get(Integer id) {
         return null;

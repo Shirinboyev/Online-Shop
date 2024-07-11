@@ -1,4 +1,3 @@
-
 <%@ page import="uz.pdp.lesson.model.market.Market" %>
 <%@ page import="java.util.List" %>
 <%@ page import="uz.pdp.lesson.model.user.User" %>

@@ -97,4 +97,13 @@ public class UserService implements BaseService {
     }
 
 
+    public Integer getUserId(User user) {
+        List<User> users = userRepository.getAll();
+        for (User user1 : users) {
+            if (user1.getEmail().equals(user.getEmail()) && user1.getPassword().equals(user.getPassword())) {
+                return user1.getId();
+            }
+        }
+        return null;
+    }
 }
