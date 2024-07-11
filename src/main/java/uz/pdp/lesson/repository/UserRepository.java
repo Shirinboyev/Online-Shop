@@ -8,17 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository implements BaseRepository<User> {
-
-    @Override
-    public void save(User user) {
+    private static void forDriver() {
         try {
             Class.forName("org.postgresql.Driver"); // Register the driver
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("PostgreSQL JDBC Driver not found. Include it in your library path.", e);
         }
 
+    }
+    @Override
+    public void save(User user) {
+        forDriver();
         String query = "INSERT INTO users (fullname, username, password, email, age, role) VALUES (?, ?, ?, ?, ?, ?)";
-
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(query)) {
 
@@ -39,11 +40,13 @@ public class UserRepository implements BaseRepository<User> {
 
     @Override
     public User get(Integer id) {
+        forDriver();
         return null;
     }
 
     @Override
     public List<User> getAll() {
+        forDriver();
         List<User> users = new ArrayList<>();
         String query = "SELECT * FROM users";
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
