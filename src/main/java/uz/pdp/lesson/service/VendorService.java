@@ -29,4 +29,9 @@ public class VendorService {
     public List<Market> getMarketsByOwnerId(int ownerId) {
         return marketRepository.getMarketsByOwnerId(ownerId);
     }
+
+
+    public List<Market> getMarketsByUserId(int id) {
+        return null;
+    }
 }
