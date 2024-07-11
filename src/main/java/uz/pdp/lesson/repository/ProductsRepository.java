@@ -35,19 +35,10 @@ public class ProductsRepository implements BaseRepository<Products> {
     }
 
     @Override
-    public boolean delete(Integer id) {
-        return false;
-    }
-
-    @Override
     public List<Products> getAll() {
         return List.of();
     }
 
-    @Override
-    public boolean update(Products old, Products updated) {
-        return false;
-    }
 
     public Products getProductById(int id) {
         Products product = null;

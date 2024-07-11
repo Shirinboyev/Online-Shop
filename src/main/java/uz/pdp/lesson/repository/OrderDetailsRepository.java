@@ -27,17 +27,7 @@ public class OrderDetailsRepository implements BaseRepository<OrderDetails>{
     }
 
     @Override
-    public boolean delete(Integer id) {
-        return false;
-    }
-
-    @Override
     public List<OrderDetails> getAll() {
         return List.of();
-    }
-
-    @Override
-    public boolean update(OrderDetails old, OrderDetails updated) {
-        return false;
     }
 }

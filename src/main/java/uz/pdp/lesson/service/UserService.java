@@ -4,7 +4,11 @@ import uz.pdp.lesson.enums.UserRole;
 import uz.pdp.lesson.model.user.User;
 import uz.pdp.lesson.repository.UserRepository;
 
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
+
+import static uz.pdp.lesson.repository.BaseRepository.*;
 
 public class UserService implements BaseService {
     private static UserService instance;
@@ -54,4 +58,43 @@ public class UserService implements BaseService {
         }
         return instance;
     }
+
+    public List<User> getAllUsers() {
+        return getUsersByRole(UserRole.VENDOR);
+    }
+
+    public List<User> getAllCustomers() {
+        return getUsersByRole(UserRole.CUSTOMER);
+    }
+
+    private List<User> getUsersByRole(UserRole userRole) {
+        List<User> users = new ArrayList<>();
+        String query = "SELECT * FROM users WHERE role = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, userRole.name());
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    User user = new User();
+                    user.setId(resultSet.getInt("id"));
+                    user.setFullname(resultSet.getString("fullname"));
+                    user.setUsername(resultSet.getString("username"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setPassword(resultSet.getString("password"));
+                    user.setAge(resultSet.getInt("age"));
+                    user.setRole(resultSet.getString("role"));
+                    users.add(user);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return users;
+    }
+
+
 }

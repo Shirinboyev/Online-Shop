@@ -2,10 +2,8 @@ package uz.pdp.lesson.repository;
 
 import uz.pdp.lesson.model.market.Market;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MarketRepository implements BaseRepository<Market>{
@@ -28,17 +26,50 @@ public class MarketRepository implements BaseRepository<Market>{
     }
 
     @Override
-    public boolean delete(Integer id) {
-        return false;
-    }
-
-    @Override
     public List<Market> getAll() {
-        return List.of();
+        List<Market> markets = new ArrayList<>();
+        String query = "SELECT * FROM market";
+
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) {
+                Market market = new Market();
+                market.setId(resultSet.getInt("id"));
+                market.setName(resultSet.getString("name"));
+                market.setOwnerId(resultSet.getInt("owner_id"));
+                markets.add(market);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return markets;
     }
 
-    @Override
-    public boolean update(Market old, Market updated) {
-        return false;
+    public List<Market> getMarketsByOwnerId(int ownerId) {
+        List<Market> markets = new ArrayList<>();
+        String query = "SELECT * FROM market WHERE owner_id = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, ownerId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Market market = new Market();
+                    market.setId(resultSet.getInt("id"));
+                    market.setName(resultSet.getString("name"));
+                    market.setOwnerId(resultSet.getInt("owner_id"));
+                    markets.add(market);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return markets;
     }
+
 }

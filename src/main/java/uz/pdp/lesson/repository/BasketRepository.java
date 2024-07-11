@@ -29,17 +29,7 @@ public class BasketRepository implements BaseRepository<Basket>{
     }
 
     @Override
-    public boolean delete(Integer id) {
-        return false;
-    }
-
-    @Override
     public List<Basket> getAll() {
         return List.of();
-    }
-
-    @Override
-    public boolean update(Basket old, Basket updated) {
-        return false;
     }
 }

@@ -28,17 +28,7 @@ public class VerificationRepository implements BaseRepository<Vertification> {
     }
 
     @Override
-    public boolean delete(Integer id) {
-        return false;
-    }
-
-    @Override
     public List<Vertification> getAll() {
         return List.of();
-    }
-
-    @Override
-    public boolean update(Vertification old, Vertification updated) {
-        return false;
     }
 }

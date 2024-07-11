@@ -43,11 +43,6 @@ public class UserRepository implements BaseRepository<User> {
     }
 
     @Override
-    public boolean delete(Integer id) {
-        return false;
-    }
-
-    @Override
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
         String query = "SELECT * FROM users";
@@ -71,8 +66,4 @@ public class UserRepository implements BaseRepository<User> {
         return users;
     }
 
-    @Override
-    public boolean update(User old, User updated) {
-        return false;
-    }
 }

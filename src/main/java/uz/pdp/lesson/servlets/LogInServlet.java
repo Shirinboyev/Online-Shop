@@ -33,7 +33,7 @@ public class LogInServlet extends HttpServlet {
 
         HttpSession session = req.getSession();
         if (user != null) {
-            session.setAttribute("user", user);  // User object set to session
+            session.setAttribute("user", user);
             Cookie cookie = new Cookie("JSESSIONID", session.getId());
             cookie.setMaxAge(60 * 60 * 24 * 7);
             resp.addCookie(cookie);

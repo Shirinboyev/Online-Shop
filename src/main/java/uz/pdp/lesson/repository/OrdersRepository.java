@@ -29,17 +29,7 @@ public class OrdersRepository implements BaseRepository<Orders>{
     }
 
     @Override
-    public boolean delete(Integer id) {
-        return false;
-    }
-
-    @Override
     public List<Orders> getAll() {
         return List.of();
-    }
-
-    @Override
-    public boolean update(Orders old, Orders updated) {
-        return false;
     }
 }
