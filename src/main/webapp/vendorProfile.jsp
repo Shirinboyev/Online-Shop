@@ -20,7 +20,7 @@
     <h1>Welcome to Your Profile, <%= user != null ? user.getFullname() : "Guest" %></h1>
 
     <div class="buttons">
-        <a href="${pageContext.request.contextPath}/myMarkets.jsp">
+        <a href="${pageContext.request.contextPath}/myMarkets">
             <button class="btn">My Markets</button>
         </a>
         <a href="${pageContext.request.contextPath}/createMarket.jsp">
