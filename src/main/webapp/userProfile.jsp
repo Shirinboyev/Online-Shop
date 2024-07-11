@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Customer Profile</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/customerProfile.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/userProfile.css">
 </head>
 <body>
 <h1>Welcome to Your Profile</h1>

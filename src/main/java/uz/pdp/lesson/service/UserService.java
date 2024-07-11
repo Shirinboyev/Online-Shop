@@ -60,11 +60,11 @@ public class UserService implements BaseService {
     }
 
     public List<User> getAllUsers() {
-        return getUsersByRole(UserRole.VENDOR);
+        return getUsersByRole(UserRole.CUSTOMER);
     }
 
-    public List<User> getAllCustomers() {
-        return getUsersByRole(UserRole.CUSTOMER);
+    public List<User> getAllVendors() {
+        return getUsersByRole(UserRole.VENDOR);
     }
 
     private List<User> getUsersByRole(UserRole userRole) {

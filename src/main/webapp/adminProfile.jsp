@@ -3,8 +3,10 @@
 <%@ page import="uz.pdp.lesson.model.user.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Profile</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/adminProfile.css">
 </head>
@@ -21,8 +23,8 @@
         </form>
 
         <form action="${pageContext.request.contextPath}/adminProfile" method="get">
-            <input type="hidden" name="action" value="showCustomers">
-            <button type="submit" class="btn">Show Customers</button>
+            <input type="hidden" name="action" value="showVendors">
+            <button type="submit" class="btn">Show Vendors</button>
         </form>
 
         <form action="${pageContext.request.contextPath}/adminProfile" method="get">
@@ -46,7 +48,7 @@
             </ul>
         </div>
         <%
-        } else if ("showCustomers".equals(action)) {
+        } else if ("showVendors".equals(action)) {
             List<User> customers = (List<User>) request.getAttribute("customers");
         %>
         <div class="list">

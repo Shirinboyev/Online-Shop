@@ -4,12 +4,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import uz.pdp.lesson.model.user.User;
-import uz.pdp.lesson.model.market.Market;
 
 import java.io.IOException;
-import java.util.List;
-@WebServlet(name = "Customer", urlPatterns = "/customerProfile")
-public class CustomerProfileServlet extends HttpServlet {
+
+@WebServlet(name = "Vendor", urlPatterns = "/vendorProfile")
+public class VendorProfileServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,6 +38,6 @@ public class CustomerProfileServlet extends HttpServlet {
         } else {
             req.setAttribute("result", "User not logged in.");
         }
-        req.getRequestDispatcher("customerProfile.jsp").forward(req, resp);
+        req.getRequestDispatcher("vendorProfile.jsp").forward(req, resp);
     }
 }

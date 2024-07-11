@@ -5,13 +5,13 @@ import uz.pdp.lesson.repository.MarketRepository;
 
 import java.util.List;
 
-public class CustomerService {
-    private static CustomerService instance = new CustomerService();
+public class VendorService {
+    private static VendorService instance = new VendorService();
     private MarketRepository marketRepository = new MarketRepository();
 
-    private CustomerService() {}
+    private VendorService() {}
 
-    public static CustomerService getInstance() {
+    public static VendorService getInstance() {
         return instance;
     }
 
