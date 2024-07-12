@@ -24,9 +24,9 @@ public class Products {
     private String imageUrl;
     private int marketId;
 
-    public Products(int id, String yozgiOyoqKiyim, double price) {
+    public Products(int id, String name, double price) {
         this.id = id;
-        this.name = yozgiOyoqKiyim;
+        this.name =name;
         this.price = price;
     }
 }

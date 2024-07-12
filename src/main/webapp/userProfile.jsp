@@ -19,7 +19,7 @@
         int totalSum = 0;
         for (Products product : cartItems) {
             totalSum += product.getPrice();
-            out.println("<li>" + product.getName() + " - " + product.getPrice() + " UZS</li>");
+            System.out.println("<li>" + product.getName() + " - " + product.getPrice() + " UZS</li>");
         }
     %>
 </ul>

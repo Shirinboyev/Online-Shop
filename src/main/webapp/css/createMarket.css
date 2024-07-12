@@ -46,3 +46,18 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: #45a049;
 }
+
+button.back-button {
+    background-color:#45a049;
+    color: #45a049;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+
+button.back-button:hover {
+    background-color:#45a049;
+}
