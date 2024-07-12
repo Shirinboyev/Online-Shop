@@ -18,7 +18,7 @@ public class ProductService {
         return productService;
     }
 
-    public void addProduct(int marketId, String productName, double productPrice, String productDescription, int productCount, String productImageUrl) {
+    public void addProduct(String productCategory, int marketId, String productName, double productPrice, String productDescription, int productCount, String productImageUrl) {
         Products product = new Products();
         product.setName(productName);
         product.setPrice(productPrice);
@@ -26,7 +26,7 @@ public class ProductService {
         product.setMarketId(marketId);
         product.setCount(productCount);
         product.setImageUrl(productImageUrl);
-        product.setCategory("Default");
+        product.setCategory(productCategory);
         productsRepository.save(product);
     }
 }

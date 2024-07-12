@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import uz.pdp.lesson.enums.Categories;
 import uz.pdp.lesson.model.market.Market;
 import uz.pdp.lesson.model.user.User;
 import uz.pdp.lesson.service.ProductService;
@@ -53,9 +54,9 @@ public class MyMarketsServlet extends HttpServlet {
             String productDescription = req.getParameter("productDescription");
             int productCount = Integer.parseInt(req.getParameter("productCount"));
             String productImageUrl = req.getParameter("productImageUrl");
+            String productCategory = req.getParameter("productCategory");
 
-            ProductService productService = ProductService.getInstance();
-            productService.addProduct(marketId, productName, productPrice, productDescription, productCount, productImageUrl);
+            productService.addProduct(productCategory,marketId, productName, productPrice, productDescription, productCount, productImageUrl);
         }
 
         resp.sendRedirect("/home");

@@ -34,6 +34,12 @@
                 <label for="productImageUrl">Product Image URL:</label>
                 <input type="text" id="productImageUrl" name="productImageUrl" required>
                 <button type="submit" class="add-btn">Add Product</button>
+                <label for="productCategory">Product Category:</label>
+                <select id="productCategory" name="productCategory" required>
+                    <% for (Categories category : Categories.values()) { %>
+                    <option value="<%= category.name() %>"><%= category.getDisplayName() %></option>
+                    <% } %>
+                </select>
             </form>
         </div>
         <% } %>
@@ -47,6 +53,7 @@
 --%>
 <%@ page import="uz.pdp.lesson.model.market.Market" %>
 <%@ page import="java.util.List" %>
+<%@ page import="uz.pdp.lesson.enums.Categories" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -110,7 +117,7 @@
     <div class="market-list">
         <% for (Market market : (List<Market>) request.getAttribute("markets")) { %>
         <div class="market-item">
-
+            <%= market.getName()%>
             <form action="${pageContext.request.contextPath}/myMarkets" method="post" class="product-form">
                 <input type="hidden" name="action" value="addProduct">
                 <input type="hidden" name="marketId" value="<%= market.getId() %>">
@@ -126,6 +133,11 @@
                 <input type="text" id="productImageUrl" name="productImageUrl" required>
                 <input type="hidden" name="marketId" value="<%= market.getId() %>">
                 <button type="submit" class="add-btn">Add Product</button>
+                <select id="productCategory" name="productCategory" required>
+                    <% for (Categories category : Categories.values()) { %>
+                    <option value="<%= category.name() %>"><%= category.getDisplayName() %></option>
+                    <% } %>
+                </select>
             </form>
         </div>
         <% } %>
