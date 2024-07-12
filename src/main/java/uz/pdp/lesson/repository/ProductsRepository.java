@@ -1,9 +1,12 @@
 package uz.pdp.lesson.repository;
 
+import uz.pdp.lesson.imageEncoder.ImageEncoder;
 import uz.pdp.lesson.model.products.Products;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import static uz.pdp.lesson.repository.BaseRepository.*;
@@ -21,7 +24,7 @@ public class ProductsRepository implements BaseRepository<Products> {
     public void save(Products product) {
         forDriver();
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            String query = "INSERT INTO product (name, price, description, count, image, market_id,category, create_date) VALUES ( ?,?, ?, ?, ?, ?, ?,?)";
+            String query = "INSERT INTO product (name, price, description, count, image, market_id,category, create_date, image_base64) VALUES ( ?,?, ?, ?, ?, ?, ?,?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, product.getName());
             statement.setDouble(2, product.getPrice());
@@ -31,8 +34,9 @@ public class ProductsRepository implements BaseRepository<Products> {
             statement.setInt(6, product.getMarketId());
             statement.setString(7, product.getCategory());
             statement.setTimestamp(8, new Timestamp(System.currentTimeMillis()));
+            statement.setString(9, ImageEncoder.encodeImage(product.getImageUrl()));
             statement.executeUpdate();
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -86,7 +90,9 @@ public class ProductsRepository implements BaseRepository<Products> {
     }
 
     private static Products productMapping(ResultSet resultSet) throws SQLException {
-        return Products.builder()
+        String imageBase64 = resultSet.getString("image_base64");
+
+        Products product = Products.builder()
                 .id(resultSet.getInt("id"))
                 .name(resultSet.getString("name"))
                 .productId(resultSet.getInt("product_id"))
@@ -98,5 +104,11 @@ public class ProductsRepository implements BaseRepository<Products> {
                 .imageUrl(resultSet.getString("image"))
                 .marketId(resultSet.getInt("market_id"))
                 .build();
+
+        if (imageBase64 != null) {
+            byte[] decodedBytes = Base64.getDecoder().decode(imageBase64);
+            product.setImageUrl(new String(decodedBytes));
+        }
+        return product;
     }
 }

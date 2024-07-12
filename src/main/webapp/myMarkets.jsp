@@ -118,7 +118,7 @@
         <% for (Market market : (List<Market>) request.getAttribute("markets")) { %>
         <div class="market-item">
             <%= market.getName()%>
-            <form action="${pageContext.request.contextPath}/myMarkets" method="post" class="product-form">
+            <form action="${pageContext.request.contextPath}/myMarkets" method="post" enctype="multipart/form-data" class="product-form">
                 <input type="hidden" name="action" value="addProduct">
                 <input type="hidden" name="marketId" value="<%= market.getId() %>">
                 <label for="productName">Product Name:</label>
@@ -129,8 +129,8 @@
                 <textarea id="productDescription" name="productDescription" required></textarea>
                 <label for="productCount">Product Count:</label>
                 <input type="text" id="productCount" name="productCount" required>
-                <label for="productImageUrl">Product Image URL:</label>
-                <input type="text" id="productImageUrl" name="productImageUrl" required>
+                <label for="productImage">Product Image:</label>
+                <input type="file" id="productImage" name="productImage" required>
                 <input type="hidden" name="marketId" value="<%= market.getId() %>">
                 <button type="submit" class="add-btn">Add Product</button>
                 <select id="productCategory" name="productCategory" required>

@@ -2,11 +2,9 @@
 package uz.pdp.lesson.servlets;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 import uz.pdp.lesson.enums.Categories;
 import uz.pdp.lesson.model.market.Market;
 import uz.pdp.lesson.model.user.User;
@@ -14,11 +12,17 @@ import uz.pdp.lesson.service.ProductService;
 import uz.pdp.lesson.service.UserService;
 import uz.pdp.lesson.service.VendorService;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
+@MultipartConfig
+
 @WebServlet(name = "MyMarket", urlPatterns = "/myMarkets")
+
 public class MyMarketsServlet extends HttpServlet {
+    private static final String MY_PROJECT_PATH = "D:\\Java\\java-codes\\Online-Shop\\";
     private final ProductService productService = ProductService.getInstance();
     private final VendorService vendorService = VendorService.getInstance();
     private final UserService userService = UserService.getInstance();
@@ -38,27 +42,48 @@ public class MyMarketsServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
 
         if (user != null) {
             Integer ownerId = userService.getUserId(user);
-            List<Market> markets = vendorService.getMarketsByUserId(ownerId);
-            req.setAttribute("markets", markets);
-            req.setAttribute("user", user);
+            Part productImagePart = req.getPart("productImage");
+            String fileName = Paths.get(productImagePart.getSubmittedFileName()).getFileName().toString();
+            String uploadPath = MY_PROJECT_PATH + "src\\main\\webapp\\uploads";
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            } else {
+                System.out.println("exists");
+            }
+
+            String filePath = uploadPath + File.separator + fileName;
+            System.out.println("File uploaded to: " + filePath);
+            try (InputStream inputStream = productImagePart.getInputStream();
+                 OutputStream outputStream = new FileOutputStream(filePath)) {
+
+                byte[] buffer = new byte[4096];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+            } catch (IOException e) {
+                e.printStackTrace(); // Handle or log the exception appropriately
+            }
 
             int marketId = Integer.parseInt(req.getParameter("marketId"));
             String productName = req.getParameter("productName");
             double productPrice = Double.parseDouble(req.getParameter("productPrice"));
             String productDescription = req.getParameter("productDescription");
             int productCount = Integer.parseInt(req.getParameter("productCount"));
-            String productImageUrl = req.getParameter("productImageUrl");
             String productCategory = req.getParameter("productCategory");
 
-            productService.addProduct(productCategory,marketId, productName, productPrice, productDescription, productCount, productImageUrl);
-        }
+            productService.addProduct(productCategory, marketId, productName, productPrice, productDescription, productCount, filePath);
 
+            List<Market> markets = vendorService.getMarketsByUserId(ownerId);
+            req.setAttribute("markets", markets);
+            req.setAttribute("user", user);
+        }
         resp.sendRedirect("/home");
     }
 }
