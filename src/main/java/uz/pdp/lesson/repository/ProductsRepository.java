@@ -24,7 +24,7 @@ public class ProductsRepository implements BaseRepository<Products> {
     public void save(Products product) {
         forDriver();
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            String query = "INSERT INTO product (name, price, description, count, image, market_id,category, create_date, image_base64) VALUES ( ?,?, ?, ?, ?, ?, ?,?, ?)";
+            String query = "INSERT INTO product (name, price, description, count, image, market_id, category, create_date, image_base64) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, product.getName());
             statement.setDouble(2, product.getPrice());
@@ -35,27 +35,23 @@ public class ProductsRepository implements BaseRepository<Products> {
             statement.setString(7, product.getCategory());
             statement.setTimestamp(8, new Timestamp(System.currentTimeMillis()));
             statement.setString(9, ImageEncoder.encodeImage(product.getImageUrl()));
-            statement.executeUpdate();
+
+            // Debugging statements
+            System.out.println("Executing query: " + statement);
+
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("A new product was inserted successfully!");
+            } else {
+                System.out.println("Failed to insert the product.");
+            }
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
 
-
     @Override
     public Products get(Integer id) {
-        forDriver();
-        return null;
-    }
-
-    @Override
-    public List<Products> getAll() {
-        forDriver();
-        return List.of();
-    }
-
-
-    public Products getProductById(int id) {
         forDriver();
         Products product = null;
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
@@ -70,6 +66,11 @@ public class ProductsRepository implements BaseRepository<Products> {
             e.printStackTrace();
         }
         return product;
+    }
+
+    @Override
+    public List<Products> getAll() {
+        return getAllProducts();
     }
 
     public List<Products> getAllProducts() {
@@ -95,12 +96,10 @@ public class ProductsRepository implements BaseRepository<Products> {
         Products product = Products.builder()
                 .id(resultSet.getInt("id"))
                 .name(resultSet.getString("name"))
-                .productId(resultSet.getInt("product_id"))
                 .price(resultSet.getDouble("price"))
                 .description(resultSet.getString("description"))
                 .count(resultSet.getInt("count"))
                 .category(resultSet.getString("category"))
-                .createDate(resultSet.getTimestamp("create_date"))
                 .imageUrl(resultSet.getString("image"))
                 .marketId(resultSet.getInt("market_id"))
                 .build();

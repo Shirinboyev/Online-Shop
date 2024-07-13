@@ -18,11 +18,9 @@ import java.nio.file.Paths;
 import java.util.List;
 
 @MultipartConfig
-
 @WebServlet(name = "MyMarket", urlPatterns = "/myMarkets")
-
 public class MyMarketsServlet extends HttpServlet {
-    private static final String MY_PROJECT_PATH = "D:\\Java\\java-codes\\Online-Shop\\";
+    private static final String MY_PROJECT_PATH = "C:/Users/gayra/OneDrive/Desktop/file/Shopping-Project";
     private final ProductService productService = ProductService.getInstance();
     private final VendorService vendorService = VendorService.getInstance();
     private final UserService userService = UserService.getInstance();
@@ -42,19 +40,20 @@ public class MyMarketsServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        HttpSession session = req.getSession();
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
 
         if (user != null) {
             Integer ownerId = userService.getUserId(user);
             Part productImagePart = req.getPart("productImage");
             String fileName = Paths.get(productImagePart.getSubmittedFileName()).getFileName().toString();
-            String uploadPath = MY_PROJECT_PATH + "src\\main\\webapp\\uploads";
+            String uploadPath = MY_PROJECT_PATH + "/src/main/webapp/uploads";
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdir();
             } else {
-                System.out.println("exists");
+                System.out.println("Upload directory exists");
             }
 
             String filePath = uploadPath + File.separator + fileName;
@@ -62,7 +61,7 @@ public class MyMarketsServlet extends HttpServlet {
             try {
                 Files.copy(productImagePart.getInputStream(), Paths.get(filePath));
             } catch (IOException e) {
-                e.printStackTrace(); // Handle or log the exception appropriately
+                e.printStackTrace();
             }
 
             int marketId = Integer.parseInt(req.getParameter("marketId"));
@@ -72,12 +71,22 @@ public class MyMarketsServlet extends HttpServlet {
             int productCount = Integer.parseInt(req.getParameter("productCount"));
             String productCategory = req.getParameter("productCategory");
 
+            // Debugging statements
+            System.out.println("Market ID: " + marketId);
+            System.out.println("Product Name: " + productName);
+            System.out.println("Product Price: " + productPrice);
+            System.out.println("Product Description: " + productDescription);
+            System.out.println("Product Count: " + productCount);
+            System.out.println("Product Category: " + productCategory);
+            System.out.println("File Path: " + filePath);
+
             productService.addProduct(productCategory, marketId, productName, productPrice, productDescription, productCount, filePath);
 
             List<Market> markets = vendorService.getMarketsByUserId(ownerId);
             req.setAttribute("markets", markets);
             req.setAttribute("user", user);
         }
-        resp.sendRedirect("/home");
+        resp.sendRedirect("/vendorProfile");
     }
+
 }

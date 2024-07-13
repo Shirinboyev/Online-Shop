@@ -26,6 +26,9 @@
         <a href="${pageContext.request.contextPath}/createMarket.jsp">
             <button class="btn">Create Markets</button>
         </a>
+        <a href="${pageContext.request.contextPath}/myProducts.jsp">
+            <button class="btn">My Products</button>
+        </a>
     </div>
 
     <% if (request.getAttribute("result") != null) { %>

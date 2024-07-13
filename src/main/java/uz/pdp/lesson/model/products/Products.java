@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
-import java.util.Base64;
-
 
 @Data
 @AllArgsConstructor
@@ -16,19 +14,18 @@ import java.util.Base64;
 public class Products {
     private int id;
     private String name;
-    private int productId;
     private double price;
     private String description;
     private int count;
     private String category;
-    private Timestamp createDate;
-    private String imageUrl;
+    private String createDate;
     private int marketId;
     private String imageBase64;
+    private String imageUrl;
 
-    public Products(int id, String yozgiOyoqKiyim, double price) {
+    public Products(int id, String description, double price) {
         this.id = id;
-        this.name = yozgiOyoqKiyim;
+        this.name = description;
         this.price = price;
     }
 }

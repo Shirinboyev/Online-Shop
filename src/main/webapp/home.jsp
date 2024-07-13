@@ -1,3 +1,5 @@
+<%@ page import="java.util.List" %>
+<%@ page import="uz.pdp.lesson.model.products.Products" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="uz">
@@ -26,13 +28,15 @@
             xhr.send("productId=" + productId);
         }
     </script>
-
 </head>
 <body>
 <header class="header">
     <div class="container">
         <div class="logo">
             ONLINE MARKET
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Mahsulotlar va turkumlar izlash">
         </div>
         <nav class="nav">
             <a href="catalog.jsp" class="btn">Katalog</a>
@@ -43,24 +47,34 @@
     </div>
 </header>
 
-<div class="search-bar">
-    <input type="text" placeholder="Mahsulotlar va turkumlar izlash">
-</div>
+
 
 <h1 style="padding-left: 30px">Tavsiyalar</h1>
 
 <section class="products">
+    <%
+        List<Products> products = (List<Products>) request.getAttribute("products");
+        if (products != null && !products.isEmpty()) {
+            for (Products product : products) {
+    %>
     <div class="product-card">
-        <img src="${pageContext.request.contextPath}/images/oyoqKiyim.jpg" alt="Product 1">
+        <img src="<%= product.getImageUrl() %>" alt="<%= product.getName() %>">
         <div class="product-info">
-            <h3>Yozgi oyoq kiyim</h3>
+            <h3><%= product.getName() %></h3>
             <div>
-                <div class="price">99,000 UZS</div>
-                <button class="btn" onclick="addToCart(1)">Savatchaga qo'shish</button>
+                <div class="price"><%= product.getPrice() %> UZS</div>
+                <button class="btn" onclick="addToCart(<%= product.getId() %>)">Savatchaga qo'shish</button>
             </div>
         </div>
     </div>
-    <!-- Add other products similarly -->
+    <%
+        }
+    } else {
+    %>
+    <p>No products found.</p>
+    <%
+        }
+    %>
 </section>
 
 <footer class="footer">
