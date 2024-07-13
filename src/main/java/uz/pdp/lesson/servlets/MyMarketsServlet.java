@@ -59,14 +59,8 @@ public class MyMarketsServlet extends HttpServlet {
 
             String filePath = uploadPath + File.separator + fileName;
             System.out.println("File uploaded to: " + filePath);
-            try (InputStream inputStream = productImagePart.getInputStream();
-                 OutputStream outputStream = new FileOutputStream(filePath)) {
-
-                byte[] buffer = new byte[4096];
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, bytesRead);
-                }
+            try {
+                Files.copy(productImagePart.getInputStream(), Paths.get(filePath));
             } catch (IOException e) {
                 e.printStackTrace(); // Handle or log the exception appropriately
             }
