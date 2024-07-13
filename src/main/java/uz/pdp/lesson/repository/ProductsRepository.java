@@ -110,4 +110,28 @@ public class ProductsRepository implements BaseRepository<Products> {
         }
         return product;
     }
+    public Products getProductById(int productId) {
+        Products product = null;
+        String query = "SELECT * FROM product WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, productId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                product = new Products();
+                product.setId(rs.getInt("id"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getDouble("price"));
+                product.setImageUrl(rs.getString("image_base64"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return product;
+    }
 }
