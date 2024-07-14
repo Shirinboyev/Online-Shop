@@ -1,56 +1,3 @@
-<%--
-<%@ page import="uz.pdp.lesson.model.market.Market" %>
-<%@ page import="java.util.List" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>My Markets</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/myMarkets.css">
-</head>
-<body>
-<div class="container">
-    <h2>Your Markets</h2>
-    <% if (request.getAttribute("markets") != null) { %>
-    <div class="market-list">
-        <% for (Market market : (List<Market>) request.getAttribute("markets")) { %>
-        <div class="market-item">
-            <form action="${pageContext.request.contextPath}/myMarkets" method="get">
-                <input type="hidden" name="marketId" value="<%= market.getId() %>">
-                <button type="submit" class="market-btn"><%= market.getName() %></button>
-            </form>
-            <form action="${pageContext.request.contextPath}/vendorProfile" method="post" class="product-form">
-                <input type="hidden" name="action" value="addProduct">
-                <input type="hidden" name="marketId" value="<%= market.getId() %>">
-                <label for="productName">Product Name:</label>
-                <input type="text" id="productName" name="productName" required>
-                <label for="productPrice">Product Price:</label>
-                <input type="text" id="productPrice" name="productPrice" required>
-                <label for="productDescription">Product Description:</label>
-                <textarea id="productDescription" name="productDescription" required></textarea>
-                <label for="productCount">Product Count:</label>
-                <input type="text" id="productCount" name="productCount" required>
-                <label for="productImageUrl">Product Image URL:</label>
-                <input type="text" id="productImageUrl" name="productImageUrl" required>
-                <button type="submit" class="add-btn">Add Product</button>
-                <label for="productCategory">Product Category:</label>
-                <select id="productCategory" name="productCategory" required>
-                    <% for (Categories category : Categories.values()) { %>
-                    <option value="<%= category.name() %>"><%= category.getDisplayName() %></option>
-                    <% } %>
-                </select>
-            </form>
-        </div>
-        <% } %>
-    </div>
-    <% } else { %>
-    <p>No markets created yet.</p>
-    <% } %>
-</div>
-</body>
-</html>
---%>
 <%@ page import="uz.pdp.lesson.model.market.Market" %>
 <%@ page import="java.util.List" %>
 <%@ page import="uz.pdp.lesson.enums.Categories" %>
@@ -96,7 +43,7 @@
             margin: 5px 0 2px;
             color: #555;
         }
-        .market-item input, .market-item textarea, .market-item button {
+        .market-item input, .market-item textarea, .market-item select, .market-item button {
             margin: 5px 0 15px;
             padding: 8px;
             border: 1px solid #ccc;
@@ -117,8 +64,8 @@
     <div class="market-list">
         <% for (Market market : (List<Market>) request.getAttribute("markets")) { %>
         <div class="market-item">
-            <%= market.getName()%>
-            <form action="${pageContext.request.contextPath}/myMarkets" method="post" class="product-form">
+            <%= market.getName() %>
+            <form action="${pageContext.request.contextPath}/myMarkets" method="post" enctype="multipart/form-data" class="product-form">
                 <input type="hidden" name="action" value="addProduct">
                 <input type="hidden" name="marketId" value="<%= market.getId() %>">
                 <label for="productName">Product Name:</label>
@@ -129,15 +76,15 @@
                 <textarea id="productDescription" name="productDescription" required></textarea>
                 <label for="productCount">Product Count:</label>
                 <input type="text" id="productCount" name="productCount" required>
-                <label for="productImageUrl">Product Image URL:</label>
-                <input type="text" id="productImageUrl" name="productImageUrl" required>
-                <input type="hidden" name="marketId" value="<%= market.getId() %>">
-                <button type="submit" class="add-btn">Add Product</button>
+                <label for="productImage">Product Image:</label>
+                <input type="file" id="productImage" name="productImage" required>
+                <label for="productCategory">Product Category:</label>
                 <select id="productCategory" name="productCategory" required>
                     <% for (Categories category : Categories.values()) { %>
                     <option value="<%= category.name() %>"><%= category.getDisplayName() %></option>
                     <% } %>
                 </select>
+                <button type="submit" class="add-btn">Add Product</button>
             </form>
         </div>
         <% } %>

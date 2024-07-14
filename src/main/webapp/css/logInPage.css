@@ -1,3 +1,4 @@
+/* Reset and basic styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -36,16 +37,20 @@ body {
 .form-section img {
     max-width: 50%;
     border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1.5s ease-in-out;
 }
 
 .form-container {
     background-color: #fff;
-    padding: 30px;
+    padding: 80px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 400px;
     margin: auto;
+    animation: slideInRight 1s ease-in-out;
 }
+
 
 .form-container h1 {
     margin-bottom: 20px;
@@ -80,6 +85,27 @@ body {
 
 .form-container button:hover {
     background-color: #e04e4e;
+}
+
+.form-container .password-container {
+    position: relative;
+}
+
+.form-container .password-container input {
+    padding-right: 30px;
+}
+
+.form-container .toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #ccc;
+}
+
+.form-container .toggle-password:hover {
+    color: #333;
 }
 
 .form-container .social-login {
@@ -130,9 +156,19 @@ body {
     margin-bottom: 15px;
 }
 
-.footer .column p, .footer .column a {
+.footer .column p,
+.footer .column a {
     color: white;
     margin-bottom: 10px;
     text-decoration: none;
     display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
