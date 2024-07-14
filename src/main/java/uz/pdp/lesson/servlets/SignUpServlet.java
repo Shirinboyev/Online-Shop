@@ -1,3 +1,4 @@
+/*
 package uz.pdp.lesson.servlets;
 
 import jakarta.servlet.ServletException;
@@ -72,6 +73,103 @@ public class SignUpServlet extends HttpServlet {
                         </body>
                         </html>
                     """);
+        }
+        resp.setHeader("Refresh", "1.5; URL=/");
+    }
+}
+*/
+package uz.pdp.lesson.servlets;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import uz.pdp.lesson.enums.UserRole;
+import uz.pdp.lesson.service.UserService;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+@WebServlet(name = "SignUp", urlPatterns = "/signup")
+public class SignUpServlet extends HttpServlet {
+    UserService userService = UserService.getInstance();
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("signup.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String fullname = req.getParameter("fullname");
+        String username = req.getParameter("username");
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
+        String prePassword = req.getParameter("prePassword");
+        int age;
+        try {
+            age = Integer.parseInt(req.getParameter("age"));
+        } catch (NumberFormatException e) {
+            age = -1; // Invalid value
+        }
+
+        String userRoleParam = req.getParameter("userRole");
+        if (userRoleParam == null || userRoleParam.isEmpty()) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "User role is missing");
+            return;
+        }
+
+        UserRole userRole;
+        try {
+            userRole = UserRole.valueOf(userRoleParam);
+        } catch (IllegalArgumentException e) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid user role");
+            return;
+        }
+
+        String result = userService.signup(fullname, username, email, password, prePassword, age, userRole);
+        PrintWriter writer = resp.getWriter();
+
+        if ("User added".equals(result)) {
+            req.setAttribute("message", "User added");
+            req.getRequestDispatcher("success.jsp").forward(req, resp);
+        } else {
+            writer.println(
+                    "<html>\n" +
+                            "<head>\n" +
+                            "    <meta charset=\"UTF-8\">\n" +
+                            "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                            "    <title>Sign Up Error</title>\n" +
+                            "    <style>\n" +
+                            "        body {\n" +
+                            "            display: flex;\n" +
+                            "            justify-content: center;\n" +
+                            "            align-items: center;\n" +
+                            "            height: 100vh;\n" +
+                            "            background-color: #f0f2f5;\n" +
+                            "            font-family: Arial, sans-serif;\n" +
+                            "        }\n" +
+                            "        .message-box {\n" +
+                            "            background: #fff;\n" +
+                            "            padding: 20px;\n" +
+                            "            border-radius: 8px;\n" +
+                            "            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\n" +
+                            "            text-align: center;\n" +
+                            "            width: 300px;\n" +
+                            "        }\n" +
+                            "        .error {\n" +
+                            "            color: red;\n" +
+                            "            font-weight: bold;\n" +
+                            "       }\n" +
+                            "    </style>\n" +
+                            "</head>\n" +
+                            "<body>\n" +
+                            "    <div class=\"message-box\">\n" +
+                            "        <p class=\"error\">" + result + "</p>\n" +
+                            "    </div>\n" +
+                            "</body>\n" +
+                            "</html>");
         }
         resp.setHeader("Refresh", "1.5; URL=/");
     }
