@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collection;
 import java.util.List;
 
 import static uz.pdp.lesson.repository.BaseRepository.*;
@@ -114,6 +115,7 @@ public class ProductsRepository implements BaseRepository<Products> {
         Products product = null;
         String query = "SELECT * FROM product WHERE id = ?";
 
+
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -134,4 +136,26 @@ public class ProductsRepository implements BaseRepository<Products> {
 
         return product;
     }
+
+    public List<Products> getProductsByMarketId(Integer marketId) {
+        forDriver();
+        List<Products> productsList = new ArrayList<>();
+        String query = "SELECT * FROM product WHERE market_id = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, marketId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Products product = productMapping(resultSet);
+                productsList.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productsList;
+    }
+
 }

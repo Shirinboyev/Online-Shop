@@ -1,12 +1,16 @@
 package uz.pdp.lesson.service;
 
 import uz.pdp.lesson.model.products.Products;
+import uz.pdp.lesson.repository.MarketRepository;
 import uz.pdp.lesson.repository.ProductsRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductService {
     private Connection connection;
@@ -17,8 +21,9 @@ public class ProductService {
     }
     private static ProductService productService;
     private final ProductsRepository productsRepository;
+    private static final MarketService marketService = MarketService.getInstance();
 
-    public ProductService() {
+    private ProductService() {
         this.productsRepository = new ProductsRepository();
     }
 
@@ -65,5 +70,17 @@ public class ProductService {
         }
 
         return null;
+    }
+    public List<Products> getAllProducts() {
+        return productsRepository.getAllProducts();
+    }
+
+    public List<Products> getProductsByOwnerId(Integer ownerId) {
+        List<Integer> marketsId = marketService.getMarketsIdByOwnerId(ownerId);
+        List<Products> products = new ArrayList<>();
+        for (Integer i : marketsId) {
+            products.addAll(productsRepository.getProductsByMarketId(i));
+        }
+        return products;
     }
 }

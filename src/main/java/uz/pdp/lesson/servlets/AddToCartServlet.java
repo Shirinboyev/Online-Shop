@@ -18,7 +18,7 @@ import java.sql.SQLException;
 
 @WebServlet("/addToCart")
 public class AddToCartServlet extends HttpServlet {
-    private ProductService productService = new ProductService();
+    private ProductService productService = ProductService.getInstance();
     private CartService cartService;
 
     @Override
