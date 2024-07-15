@@ -1,5 +1,7 @@
 <%@ page import="uz.pdp.lesson.model.products.Products" %>
 <%@ page import="java.util.List" %>
+<%@ page import="uz.pdp.lesson.model.user.User" %>
+
 <!DOCTYPE html>
 <html lang="uz">
 <head>
@@ -7,7 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/homePage.css">
     <title>Online Market</title>
-
     <style>
         * {
             margin: 0;
@@ -240,8 +241,31 @@
         <nav class="nav">
             <a href="catalog.jsp" class="btn">Katalog</a>
             <a href="/userProfile" class="btn">Savat</a>
+            <%
+                HttpSession session1 = request.getSession(false);
+                User user = (session1 != null) ? (User) session1.getAttribute("user") : null;
+                if (user != null) {
+                    String role = user.getRole();
+                    if ("ADMIN".equalsIgnoreCase(role)) {
+            %>
+            <a href="/adminProfile" class="btn">Admin Profile</a>
+            <%
+            } else if ("VENDOR".equalsIgnoreCase(role)) {
+            %>
+            <a href="/vendorProfile" class="btn">Vendor Profile</a>
+            <%
+            } else if("CUSTOMER".equalsIgnoreCase(role)){
+            %>
+            <a href="/userProfile" class="btn">User Profile</a>
+            <%
+                }
+            } else {
+            %>
             <a href="/login" class="btn">Login</a>
-            <a href="/signup" class="btn">Register</a>
+            <a href="/signup" class="btn">SignUp</a>
+            <%
+                }
+            %>
         </nav>
     </div>
     <div class="search-bar">
@@ -293,7 +317,7 @@
         </div>
     </div>
 </section>
-<%--<section class="products">
+<section class="products">
     <%
         List<Products> products = (List<Products>) request.getAttribute("products");
         if (products != null && !products.isEmpty()) {
@@ -317,7 +341,7 @@
     <%
         }
     %>
-</section>--%>
+</section>
 
 <script>
     function addToCart(productId) {

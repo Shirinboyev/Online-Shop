@@ -8,6 +8,8 @@
     <meta charset="UTF-8">
     <title>Customer Profile</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/vendorProfile.css">
+    <script src="${pageContext.request.contextPath}/js/logoutConfirmation.js"></script>
+
 </head>
 <body>
 <div class="navbar">
@@ -34,6 +36,15 @@
     <% if (request.getAttribute("result") != null) { %>
     <p><%= request.getAttribute("result") %></p>
     <% } %>
+
+
+    <button onclick="showLogoutConfirmation()" class="btn">Log Out</button>
+
+    <div id="logoutConfirmation" style="display:none;">
+        <p>Are you sure you want to log out?</p>
+        <button onclick="confirmLogout()">Yes</button>
+        <button onclick="hideLogoutConfirmation()">No</button>
+    </div>
 </div>
 </body>
 </html>

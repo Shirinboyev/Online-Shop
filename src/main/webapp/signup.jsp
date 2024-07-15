@@ -1,229 +1,197 @@
-<%--
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/signupPage.css">
     <title>Create an Account</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Quicksand", sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #111;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .ring {
+            position: relative;
+            width: 700px; /* Increased size */
+            height: 700px; /* Increased size */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ring i {
+            position: absolute;
+            inset: 0;
+            border: 3px solid #fff; /* Increased border size */
+            transition: 0.5s;
+        }
+
+        .ring i:nth-child(1) {
+            border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
+            animation: animate 6s linear infinite;
+        }
+
+        .ring i:nth-child(2) {
+            border-radius: 41% 44% 56% 59%/38% 62% 63% 37%;
+            animation: animate 4s linear infinite;
+        }
+
+        .ring i:nth-child(3) {
+            border-radius: 41% 44% 56% 59%/38% 62% 63% 37%;
+            animation: animate2 10s linear infinite;
+        }
+
+        .ring:hover i {
+            border: 8px solid var(--clr); /* Increased hover border size */
+            filter: drop-shadow(0 0 30px var(--clr)); /* Increased shadow size */
+        }
+
+        @keyframes animate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes animate2 {
+            0% {
+                transform: rotate(360deg);
+            }
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        .login {
+            position: absolute;
+            width: 300px;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .login h2 {
+            font-size: 2em;
+            color: #fff;
+        }
+
+        .inputBx {
+            position: relative;
+            width: 100%;
+        }
+
+        .inputBx label {
+            display: block;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .inputBx input, .inputBx select {
+            position: relative;
+            width: 100%;
+            padding: 12px 20px;
+            background: transparent;
+            border: 2px solid #fff;
+            border-radius: 40px;
+            font-size: 1.2em;
+            color: #fff;
+            box-shadow: none;
+            outline: none;
+        }
+
+        .inputBx input[type="submit"] {
+            width: 100%;
+            background: linear-gradient(45deg, #ff357a, #fff172);
+            border: none;
+            cursor: pointer;
+        }
+
+        .inputBx input::placeholder {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .links {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .links a {
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-<div class="header">
-    <div class="logo">
-        <a href="#"> Exclusive</a>
-    </div>
-    <nav>
-        <a href="/">Home</a>
-        <a href="#">Contact</a>
-        <a href="#">About</a>
-        <a href="/login.jsp">LogIn</a>
-    </nav>
-</div>
-
-<div class="container">
-    <div class="form-section">
-        <img src="https://st3.depositphotos.com/13194036/31763/i/450/depositphotos_317633680-stock-photo-cropped-view-woman-holding-toy.jpg" alt="src/main/webapp/images/signUpImage.jpg">
-        <div class="form-container">
-            <h1>Create an account</h1>
-            <form action="/signup" method="post">
-                <label for="fullname">Full Name</label>
+<div class="ring">
+    <i style="--clr:#00ff0a;"></i>
+    <i style="--clr:#ff0057;"></i>
+    <i style="--clr:#fffd44;"></i>
+    <div class="login">
+        <h2>Create an Account</h2>
+        <form action="${pageContext.request.contextPath}/signup" method="post">
+            <div class="inputBx">
+                <label for="fullname"></label>
                 <input type="text" id="fullname" name="fullname" placeholder="Enter fullname" required>
-
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username"  placeholder="Enter username" required>
-
-                <label for="email">Email</label>
+            </div>
+            <div class="inputBx">
+                <label for="username"></label>
+                <input type="text" id="username" name="username" placeholder="Enter username" required>
+            </div>
+            <div class="inputBx">
+                <label for="email"></label>
                 <input type="email" id="email" name="email" placeholder="Enter email" required>
-
-                <label for="age">Age</label>
-                <input type="number" id="age" name="age"  placeholder="Enter Age" required>
-
-                <label for="password">Password</label>
-                <div class="password-container">
-                    <input type="password" id="password" name="password"  placeholder="Enter password" required>
-                    <i class="far fa-eye toggle-password" title="Show Password"></i>
-                </div>
-
-                <label for="prePassword">PrePassword</label>
-                <div class="password-container">
-                    <input type="password" id="prePassword" name="prePassword" placeholder="Enter PrePassword" required>
-                    <i class="far fa-eye toggle-password" title="Show Password"></i>
-                </div>
-
+            </div>
+            <div class="inputBx">
+                <label for="age"></label>
+                <input type="number" id="age" name="age" placeholder="Enter age" required>
+            </div>
+            <div class="inputBx">
+                <label for="password"></label>
+                <input type="password" id="password" name="password" placeholder="Enter password" required>
+            </div>
+            <div class="inputBx">
+                <label for="prePassword"></label>
+                <input type="password" id="prePassword" name="prePassword" placeholder="Enter Pre Password" required>
+            </div>
+            <div class="inputBx">
                 <label for="user_type">Choose User Type:</label>
                 <select id="user_type" name="UserRole" required>
                     <option value="CUSTOMER">Customer</option>
                     <option value="VENDOR">Vendor</option>
-                </select><br><br>
-
-                <button type="submit">Create Account</button>
-            </form>
-            <div class="social-login">
-                <button><i class="fab fa-google"></i> Sign up with Google</button>
+                </select>
             </div>
-            <p>Already have an account? <a href="/login">Log in</a></p>
-            <p style="color: red;"><%= request.getAttribute("message") != null ? request.getAttribute("message") : "" %></p>
-        </div>
-    </div>
-</div>
-<script>
-    document.querySelectorAll('.toggle-password').forEach(item => {
-        item.addEventListener('click', function () {
-            const passwordField = this.previousElementSibling;
-            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordField.setAttribute('type', type);
-            this.classList.toggle('fa-eye');
-            this.classList.toggle('fa-eye-slash');
-            this.setAttribute('title', type === 'password' ? 'Show Password' : 'Hide Password');
-        });
-    });
-</script>
-<div class="footer">
-    <div class="container">
-        <div class="column">
-            <h4>Exclusive</h4>
-            <p>Subscribe</p>
-            <p>Get 10% off your first order</p>
-        </div>
-        <div class="column">
-            <h4>Support</h4>
-            <p>Help center</p>
-            <p>Contact us</p>
-        </div>
-        <div class="column">
-            <h4>Account</h4>
-            <p>My Account</p>
-            <p>Login / Register</p>
-            <p>Order Status</p>
-        </div>
-        <div class="column">
-            <h4>Quick Link</h4>
-            <p>Privacy Policy</p>
-            <p>Terms of Use</p>
-            <p>FAQ</p>
-        </div>
-        <div class="column">
-            <h4>Download App</h4>
-            <p>Get it on Google Play</p>
-            <p>Download on the App Store</p>
-        </div>
-    </div>
-</div>
-
-</body>
-</html>--%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/signupPage.css">
-    <title>Create an Account</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head>
-<body>
-<div class="header">
-    <div class="logo">
-        <a href="#"> Exclusive</a>
-    </div>
-    <nav>
-        <a href="/">Home</a>
-        <a href="#">Contact</a>
-        <a href="#">About</a>
-        <a href="/login.jsp">LogIn</a>
-    </nav>
-</div>
-
-<div class="container">
-    <div class="form-section">
-        <img src="https://st3.depositphotos.com/13194036/31763/i/450/depositphotos_317633680-stock-photo-cropped-view-woman-holding-toy.jpg" alt="src/main/webapp/images/signUpImage.jpg">
-        <div class="form-container">
-            <h1>Create an account</h1>
-            <form action="/signup" method="post">
-                <label for="fullname">Full Name</label>
-                <input type="text" id="fullname" name="fullname" placeholder="Enter fullname" required>
-
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username"  placeholder="Enter username" required>
-
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Enter email" required>
-
-                <label for="age">Age</label>
-                <input type="number" id="age" name="age"  placeholder="Enter Age" required>
-
-                <label for="password">Password</label>
-                <div class="password-container">
-                    <input type="password" id="password" name="password"  placeholder="Enter password" required>
-                    <i class="far fa-eye toggle-password" title="Show Password"></i>
-                </div>
-
-                <label for="prePassword">PrePassword</label>
-                <div class="password-container">
-                    <input type="password" id="prePassword" name="prePassword" placeholder="Enter PrePassword" required>
-                    <i class="far fa-eye toggle-password" title="Show Password"></i>
-                </div>
-
-                <label for="user_type">Choose User Type:</label>
-                <select id="user_type" name="userRole" required>
-                    <option value="CUSTOMER">Customer</option>
-                    <option value="VENDOR">Vendor</option>
-                </select><br><br>
-
-                <button type="submit">Create Account</button>
-            </form>
-            <div class="social-login">
-                <button><i class="fab fa-google"></i> Sign up with Google</button>
+            <div class="inputBx">
+                <input type="submit" value="Create Account">
             </div>
-            <p>Already have an account? <a href="/login">Log in</a></p>
-            <p style="color: red;"><%= request.getAttribute("message") != null ? request.getAttribute("message") : "" %></p>
-        </div>
+            <div class="links">
+                <a href="#">Forget Password</a>
+                <a href="${pageContext.request.contextPath}/login.jsp">LogIn</a>
+            </div>
+        </form>
     </div>
 </div>
-<script>
-    document.querySelectorAll('.toggle-password').forEach(item => {
-        item.addEventListener('click', function () {
-            const passwordField = this.previousElementSibling;
-            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordField.setAttribute('type', type);
-            this.classList.toggle('fa-eye');
-            this.classList.toggle('fa-eye-slash');
-            this.setAttribute('title', type === 'password' ? 'Show Password' : 'Hide Password');
-        });
-    });
-</script>
-<div class="footer">
-    <div class="container">
-        <div class="column">
-            <h4>Exclusive</h4>
-            <p>Subscribe</p>
-            <p>Get 10% off your first order</p>
-        </div>
-        <div class="column">
-            <h4>Support</h4>
-            <p>Help center</p>
-            <p>Contact us</p>
-        </div>
-        <div class="column">
-            <h4>Account</h4>
-            <p>My Account</p>
-            <p>Login / Register</p>
-            <p>Order Status</p>
-        </div>
-        <div class="column">
-            <h4>Quick Link</h4>
-            <p>Privacy Policy</p>
-            <p>Terms of Use</p>
-            <p>FAQ</p>
-        </div>
-        <div class="column">
-            <h4>Download App</h4>
-            <p>Get it on Google Play</p>
-            <p>Download on the App Store</p>
-        </div>
-    </div>
-</div>
-
 </body>
 </html>

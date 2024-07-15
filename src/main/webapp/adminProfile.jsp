@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Profile</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/adminProfile.css">
+    <script src="${pageContext.request.contextPath}/js/logoutConfirmation.js"></script>
+
 </head>
 <body>
 <div class="container">
@@ -74,7 +76,16 @@
         <%
             }
         %>
+        <button onclick="showLogoutConfirmation()" class="btn">Log Out</button>
+
+        <div id="logoutConfirmation" style="display:none;">
+            <p>Are you sure you want to log out?</p>
+            <button onclick="confirmLogout()">Yes</button>
+            <button onclick="hideLogoutConfirmation()">No</button>
+        </div>
     </section>
+
+
 </div>
 </body>
 </html>

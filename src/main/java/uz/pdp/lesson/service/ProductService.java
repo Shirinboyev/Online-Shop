@@ -3,11 +3,22 @@ package uz.pdp.lesson.service;
 import uz.pdp.lesson.model.products.Products;
 import uz.pdp.lesson.repository.ProductsRepository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class ProductService {
+    private Connection connection;
+
+    public ProductService(Connection connection, ProductsRepository productsRepository) {
+        this.connection = connection;
+        this.productsRepository = productsRepository;
+    }
     private static ProductService productService;
     private final ProductsRepository productsRepository;
 
-    private ProductService() {
+    public ProductService() {
         this.productsRepository = new ProductsRepository();
     }
 
@@ -28,5 +39,31 @@ public class ProductService {
         product.setImageUrl(productImageUrl);
         product.setCategory(productCategory);
         productsRepository.save(product);
+    }
+    public Products getProductById(int productId) {
+        String sql = "SELECT * FROM product WHERE id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, productId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                Products product = new Products();
+                product.setId(resultSet.getInt("id"));
+                product.setName(resultSet.getString("name"));
+                product.setPrice(resultSet.getDouble("price"));
+                product.setDescription(resultSet.getString("description"));
+                product.setCount(resultSet.getInt("count"));
+                product.setCategory(resultSet.getString("category"));
+                product.setImageUrl(resultSet.getString("image_url"));
+                product.setMarketId(resultSet.getInt("market_id"));
+
+                return product;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

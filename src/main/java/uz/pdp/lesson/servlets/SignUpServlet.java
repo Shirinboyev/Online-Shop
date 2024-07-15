@@ -29,7 +29,7 @@ public class SignUpServlet extends HttpServlet {
         String password = req.getParameter("password");
         String prePassword = req.getParameter("prePassword");
         int age = Integer.parseInt(req.getParameter("age"));
-        UserRole userRole = UserRole.valueOf(req.getParameter("userRole"));
+        UserRole userRole = UserRole.valueOf(req.getParameter("UserRole"));
         String result = userService.signup(fullname, username, email, password, prePassword, age, userRole);
         PrintWriter writer = resp.getWriter();
 
