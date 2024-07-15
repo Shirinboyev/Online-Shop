@@ -1,16 +1,11 @@
 package uz.pdp.lesson.repository;
 
-import uz.pdp.lesson.imageEncoder.ImageEncoder;
 import uz.pdp.lesson.model.products.Products;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Collection;
-import java.util.List;
 
-import static uz.pdp.lesson.repository.BaseRepository.*;
+import java.util.List;
 
 public class ProductsRepository implements BaseRepository<Products> {
 
@@ -25,19 +20,17 @@ public class ProductsRepository implements BaseRepository<Products> {
     public void save(Products product) {
         forDriver();
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            String query = "INSERT INTO product (name, price, description, count, image, market_id, category, create_date, image_base64) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO product (name, price, description, count, image_base64, market_id, category, create_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, product.getName());
             statement.setDouble(2, product.getPrice());
             statement.setString(3, product.getDescription());
             statement.setInt(4, product.getCount());
-            statement.setString(5, product.getImageUrl());
+            statement.setString(5, product.getImageBase64());
             statement.setInt(6, product.getMarketId());
             statement.setString(7, product.getCategory());
             statement.setTimestamp(8, new Timestamp(System.currentTimeMillis()));
-            statement.setString(9, ImageEncoder.encodeImage(product.getImageUrl()));
 
-            // Debugging statements
             System.out.println("Executing query: " + statement);
 
             int rowsInserted = statement.executeUpdate();
@@ -46,7 +39,7 @@ public class ProductsRepository implements BaseRepository<Products> {
             } else {
                 System.out.println("Failed to insert the product.");
             }
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -102,7 +95,7 @@ public class ProductsRepository implements BaseRepository<Products> {
                 .count(resultSet.getInt("count"))
                 .category(resultSet.getString("category"))
                 .imageUrl(resultSet.getString("image"))
-                .imageBase64(imageBase64)
+                .imageBase64(resultSet.getString("image_base64"))
                 .marketId(resultSet.getInt("market_id"))
                 .build();
         return product;

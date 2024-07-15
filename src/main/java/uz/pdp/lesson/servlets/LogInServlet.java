@@ -24,13 +24,13 @@ public class LogInServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        String prePassword = req.getParameter("prePassword");
+  //      String prePassword = req.getParameter("prePassword");
 
         logger.info("Email: " + email);
         logger.info("Password: " + password);
-        logger.info("PrePassword: " + prePassword);
+     //   logger.info("PrePassword: " + prePassword);
 
-        User user = userService.login(email, password, prePassword);
+        User user = userService.login(email, password);
 
         if (user != null) {
             logger.info("User found: " + user.getFullname());

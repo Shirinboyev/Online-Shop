@@ -15,10 +15,10 @@ public class UserService implements BaseService {
     private UserRepository userRepository = new UserRepository();
 
 
-    public User login(String email, String password, String prePassword) {
+    public User login(String email, String password) {
         List<User> users = userRepository.getAll();
         for (User user : users) {
-            if (user.getEmail().equals(email) && user.getPassword().equals(password) && password.equals(prePassword)) {
+            if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
                 return user;
             }
         }

@@ -15,12 +15,13 @@ import uz.pdp.lesson.service.VendorService;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
 
 @MultipartConfig
 @WebServlet(name = "MyMarket", urlPatterns = "/myMarkets")
 public class MyMarketsServlet extends HttpServlet {
-    private static final String MY_PROJECT_PATH = "D:\\Java\\java-codes\\Online-Shop";
+    private static final String MY_PROJECT_PATH = "C:\\Users\\gayra\\OneDrive\\Desktop\\file\\Shopping-Project";
     private final ProductService productService = ProductService.getInstance();
     private final VendorService vendorService = VendorService.getInstance();
     private final UserService userService = UserService.getInstance();
@@ -49,6 +50,9 @@ public class MyMarketsServlet extends HttpServlet {
             Part productImagePart = req.getPart("productImage");
             String fileName = Paths.get(productImagePart.getSubmittedFileName()).getFileName().toString();
             String uploadPath = MY_PROJECT_PATH + "/src/main/webapp/uploads";
+            byte[] bytes = productImagePart.getInputStream().readAllBytes();
+            Base64.Encoder encoder = Base64.getEncoder();
+            String base64Img = encoder.encodeToString(bytes);
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdir();
@@ -71,7 +75,6 @@ public class MyMarketsServlet extends HttpServlet {
             int productCount = Integer.parseInt(req.getParameter("productCount"));
             String productCategory = req.getParameter("productCategory");
 
-            // Debugging statements
             System.out.println("Market ID: " + marketId);
             System.out.println("Product Name: " + productName);
             System.out.println("Product Price: " + productPrice);
@@ -80,7 +83,7 @@ public class MyMarketsServlet extends HttpServlet {
             System.out.println("Product Category: " + productCategory);
             System.out.println("File Path: " + filePath);
 
-            productService.addProduct(productCategory, marketId, productName, productPrice, productDescription, productCount, filePath);
+            productService.addProduct(productCategory, marketId, productName, productPrice, productDescription, productCount, filePath,base64Img);
 
             List<Market> markets = vendorService.getMarketsByUserId(ownerId);
             req.setAttribute("markets", markets);

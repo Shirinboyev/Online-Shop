@@ -37,10 +37,10 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Password" required>
             </div>
-            <div class="inputBx">
+<%--            <div class="inputBx">
                 <label for="prePassword">Pre Password</label>
                 <input type="password" id="prePassword" name="prePassword" placeholder="Pre Password" required>
-            </div>
+            </div>--%>
             <div class="inputBx">
                 <input type="submit" value="Sign in">
             </div>
