@@ -3,33 +3,10 @@
 <head>
     <title>Create a New Market</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/createMarket.css">
-</head>
-<body>
-<h2>Create a New Market</h2>
-<form action="${pageContext.request.contextPath}/vendorProfile" method="post">
-    <input type="hidden" name="action" value="createMarket">
-    <label for="marketName">Market Name:</label>
-    <input type="text" id="marketName" name="marketName" required>
-    <button type="submit">Create Market</button>
-<button class="back-button" onclick="goBack()"> Go Back</button>
-<script>
-    function goBack() {
-        window.location.href = '${pageContext.request.contextPath}/vendorProfile';
-    }
-</script>
-</form>
-</body>
-</html>
-<%--
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Create a New Market</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/createMarket.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f8ff; /* Light blue background color */
+            background-color: #fafafa;
             margin: 0;
             padding: 0;
             display: flex;
@@ -38,81 +15,86 @@
             height: 100vh;
         }
 
-        h2 {
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            max-width: 100%;
             text-align: center;
+            color: #333;
         }
 
-        form {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
         }
 
         label {
+            margin-bottom: 10px;
+            color: #555;
+            font-size: 16px;
             display: block;
-            margin-bottom: 5px;
+            text-align: left;
+            width: 100%;
         }
 
         input[type="text"] {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
         }
 
-        button[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #5b9dd9;
+        }
+
+        button {
+            background-color: #03a9f4;
+            color: #fff;
             border: none;
-            border-radius: 5px;
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
             cursor: pointer;
-            width: 100%;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
         }
 
-        button[type="submit"]:hover {
-            background-color: #45a049;
+        button:hover {
+            background-color: #039be5;
         }
 
-        button.back-button {
-            background-color: #f44336;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
+        .back-button {
+            background-color: #e91e63;
+            color: #fff;
             margin-top: 10px;
         }
 
-        button.back-button:hover {
-            background-color: #d32f2f;
+        .back-button:hover {
+            background-color: #d81b60;
         }
     </style>
 </head>
 <body>
-<h2>Create a New Market</h2>
-<form action="${pageContext.request.contextPath}/vendorProfile" method="post">
-    <input type="hidden" name="action" value="createMarket">
-    <label for="marketName">Market Name:</label>
-    <input type="text" id="marketName" name="marketName" required>
-    <button type="submit">Create Market</button>
-</form>
-
-<button class="back-button" onclick="goBack()">Orqaga</button>
-
-<script>
-    function goBack() {
-        window.location.href = '${pageContext.request.contextPath}/vendorProfile';
-    }
-</script>
+<div class="container">
+    <h2>Create a New Market</h2>
+    <form action="${pageContext.request.contextPath}/vendorProfile" method="post">
+        <input type="hidden" name="action" value="createMarket">
+        <label for="marketName">Market Name:</label>
+        <input type="text" id="marketName" name="marketName" required>
+        <button type="submit">Create Market</button>
+    </form>
+</div>
 
 </body>
 </html>
-
---%>

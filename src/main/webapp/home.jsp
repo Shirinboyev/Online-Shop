@@ -1,7 +1,6 @@
 <%@ page import="uz.pdp.lesson.model.products.Products" %>
 <%@ page import="java.util.List" %>
 <%@ page import="uz.pdp.lesson.model.user.User" %>
-
 <!DOCTYPE html>
 <html lang="uz">
 <head>
@@ -10,6 +9,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/homePage.css">
     <title>Online Market</title>
     <style>
+        /* Your existing styles here */
         * {
             margin: 0;
             padding: 0;
@@ -272,6 +272,7 @@
         <input type="text" placeholder="Mahsulotlar va turkumlar izlash">
     </div>
 </header>
+
 <div class="banner">
     <button class="prev" onclick="prevImage()">&lt;</button>
     <img src="${pageContext.request.contextPath}/images/phones.jpg" alt="Banner Image" id="bannerImage">
@@ -306,25 +307,13 @@
 
 <h1 style="padding-left: 30px">Tavsiyalar</h1>
 <section class="products">
-    <div class="product-card">
-        <img src="${pageContext.request.contextPath}/images/phones.jpg" alt="Sample Product">
-        <div class="product-info">
-            <h3>Sample Product</h3>
-            <div>
-                <div class="price">50000 UZS</div>
-                <button class="btn" onclick="addToCart(1)">Savatchaga qo'shish</button>
-            </div>
-        </div>
-    </div>
-</section>
-<section class="products">
     <%
         List<Products> products = (List<Products>) request.getAttribute("products");
         if (products != null && !products.isEmpty()) {
             for (Products product : products) {
     %>
     <div class="product-card">
-        <img src="<%= product.getImageUrl() %>" alt="<%= product.getName() %>">
+        <img src="data:image/jpeg;base64,<%=product.getImageBase64()%>" style="width: 150px; height: 150px;" alt="Image not found">
         <div class="product-info">
             <h3><%= product.getName() %></h3>
             <div>
@@ -359,8 +348,9 @@
 
 <footer class="footer">
     <div class="container">
-        <p>&copy; 2024 Uzum Market. Barcha huquqlar himoyalangan.</p>
+        <p>&copy; 2024 Online Market. All rights reserved.</p>
     </div>
 </footer>
+
 </body>
 </html>

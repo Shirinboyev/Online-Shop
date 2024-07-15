@@ -1,21 +1,89 @@
-<%@ page import="uz.pdp.lesson.model.market.Market" %>
 <%@ page import="uz.pdp.lesson.model.user.User" %>
-<%@ page import="java.util.List" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Customer Profile</title>
+    <title>Vendor Profile</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/vendorProfile.css">
-    <script src="${pageContext.request.contextPath}/js/logoutConfirmation.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
 
+        .navbar {
+            background-color: transparent;
+            padding: 10px 20px;
+            text-align: right;
+            box-shadow: none;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #ff5733;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px;
+            padding: 40px;
+            background-color: #444;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            color: #17a2b8;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .buttons a {
+            text-decoration: none;
+        }
+
+        button {
+            background-color: #17a2b8;
+            color: #fff;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #138496;
+        }
+
+        p {
+            color: #28a745;
+        }
+    </style>
 </head>
 <body>
 <div class="navbar">
-    <a href="${pageContext.request.contextPath}/">
-        <h1>want to shop?</h1>
-    </a>
+    <a href="${pageContext.request.contextPath}/logout">Log Out</a>
 </div>
 <div class="container">
     <% User user = (User) request.getAttribute("user"); %>
@@ -38,13 +106,10 @@
     <% } %>
 
 
-    <button onclick="showLogoutConfirmation()" class="btn">Log Out</button>
 
-    <div id="logoutConfirmation" style="display:none;">
-        <p>Are you sure you want to log out?</p>
-        <button onclick="confirmLogout()">Yes</button>
-        <button onclick="hideLogoutConfirmation()">No</button>
-    </div>
 </div>
+
+<script src="${pageContext.request.contextPath}/js/logoutConfirmation.js"></script>
+
 </body>
 </html>

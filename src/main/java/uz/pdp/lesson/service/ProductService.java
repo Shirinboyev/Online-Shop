@@ -1,6 +1,7 @@
 package uz.pdp.lesson.service;
 
 import uz.pdp.lesson.model.products.Products;
+import uz.pdp.lesson.repository.BaseRepository;
 import uz.pdp.lesson.repository.ProductsRepository;
 
 import java.sql.Connection;
@@ -82,5 +83,17 @@ public class ProductService {
             products.addAll(productsRepository.getProductsByMarketId(i));
         }
         return products;
+    }
+    public boolean deleteProductById(int id) {
+        try (Connection connection = BaseRepository.getConnection()) {
+            String query = "DELETE FROM product WHERE id = ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            int affectedRows = ps.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

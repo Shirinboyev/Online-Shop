@@ -111,10 +111,10 @@ public class SignUpServlet extends HttpServlet {
         try {
             age = Integer.parseInt(req.getParameter("age"));
         } catch (NumberFormatException e) {
-            age = -1; // Invalid value
+            age = -1;
         }
 
-        String userRoleParam = req.getParameter("userRole");
+        String userRoleParam = req.getParameter("UserRole");
         if (userRoleParam == null || userRoleParam.isEmpty()) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "User role is missing");
             return;

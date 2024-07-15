@@ -54,7 +54,7 @@
             List<User> customers = (List<User>) request.getAttribute("customers");
         %>
         <div class="list">
-            <h3>Customers List:</h3>
+            <h3>Vendor's List:</h3>
             <ul>
                 <% for (User customer : customers) { %>
                 <li><%= customer.getFullname() %> - <%= customer.getEmail() %></li>
@@ -66,7 +66,7 @@
             List<Market> markets = (List<Market>) request.getAttribute("markets");
         %>
         <div class="list">
-            <h3>Customer's Markets List:</h3>
+            <h3>Vendor's Markets List:</h3>
             <ul>
                 <% for (Market market : markets) { %>
                 <li><%= market.getName() %> - Owner ID: <%= market.getOwnerId() %></li>

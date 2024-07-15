@@ -17,6 +17,6 @@ public class User {
     private String password;
     private String prePassword;
     private int age;
-    private String Role = "ADMIN";
+    private String Role;
 
 }

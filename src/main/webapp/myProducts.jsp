@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>My Products</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/vendorProfile.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/myProducts.css">
 </head>
 <body>
 <div class="navbar">
@@ -24,11 +24,9 @@
                 for (Products product : products) {
         %>
         <div class="product-item">
-            <h2><%= product.getName() %></h2>
-            <p><%= product.getDescription() %></p>
             <img src="data:image/jpeg;base64,<%=product.getImageBase64()%>" style="width: 150px; height: 150px;" alt="Image not found">
-            <p>Price: $<%= product.getPrice() + "$"%></p>
-        </div>
+            <h2><%= product.getName() %></h2>
+            <p>Price: $<%= product.getPrice() %></p>
         </div>
         <%
             }
