@@ -18,6 +18,7 @@
     <h1>My Products</h1>
     <div class="product-list">
         <%
+            @SuppressWarnings("unchecked")
             List<Products> products = (List<Products>) request.getAttribute("products");
             if (products != null && !products.isEmpty()) {
                 for (Products product : products) {
@@ -25,8 +26,9 @@
         <div class="product-item">
             <h2><%= product.getName() %></h2>
             <p><%= product.getDescription() %></p>
-            <p>Price: $<%= product.getPrice() %></p>
-            <img src="<%= product.getImageUrl() %>" alt="<%= product.getName() %> image" style="width: 100px; height: 100px;">
+            <img src="data:image/jpeg;base64,<%=product.getImageBase64()%>" style="width: 150px; height: 150px;" alt="Image not found">
+            <p>Price: $<%= product.getPrice() + "$"%></p>
+        </div>
         </div>
         <%
             }

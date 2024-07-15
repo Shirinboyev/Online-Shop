@@ -28,12 +28,9 @@ public class UserProfileServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("loggedInUser"); // Foydalanuvchi sessiyasidan ma'lumot olish
+        User user = (User) session.getAttribute("user");
         if (user == null) {
-            // Foydalanuvchi sessiyada mavjud bo'lmasa, uni ma'lumotlar bazasidan olish yoki login sahifasiga yo'naltirish
-            // Masalan:
-            // user = userService.getUserById(userId);
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("/login");
             return;
         }
         request.setAttribute("user", user);

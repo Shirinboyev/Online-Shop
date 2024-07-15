@@ -180,7 +180,7 @@
                 <label for="user_type">Choose User Type:</label>
                 <select id="user_type" name="UserRole" required>
                     <option value="CUSTOMER">Customer</option>
-                    <option value="VENDOR">Vendor</option>
+                    <%--<option value="VENDOR">Vendor</option>--%>
                 </select>
             </div>
             <div class="inputBx">

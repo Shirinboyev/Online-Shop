@@ -25,10 +25,10 @@
         <a href="${pageContext.request.contextPath}/myMarkets">
             <button class="btn">My Markets</button>
         </a>
-        <a href="${pageContext.request.contextPath}/createMarket.jsp">
+        <a href="${pageContext.request.contextPath}/createMarket">
             <button class="btn">Create Markets</button>
         </a>
-        <a href="${pageContext.request.contextPath}/myProducts.jsp">
+        <a href="${pageContext.request.contextPath}/myProducts">
             <button class="btn">My Products</button>
         </a>
     </div>

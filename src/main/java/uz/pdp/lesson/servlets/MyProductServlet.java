@@ -25,11 +25,10 @@ public class MyProductServlet extends HomeServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("loggedInUser");
+        User user = (User) session.getAttribute("user");
         if (Objects.nonNull(user)) {
-            List<Products> products = productService.getProductsByOwnerId(userService.getUserId(user));
+            List<Products> products = productService.getProductsByOwnerId(user.getId());
             request.setAttribute("products", products);
-            request.setAttribute("user", user);
             request.getRequestDispatcher("/myProducts.jsp").forward(request, response);
         } else {
             response.sendRedirect("login.jsp");

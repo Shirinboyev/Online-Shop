@@ -307,7 +307,7 @@
 <h1 style="padding-left: 30px">Tavsiyalar</h1>
 <section class="products">
     <div class="product-card">
-        <img src="${pageContext.request.contextPath}/images/sampleProduct.jpg" alt="Sample Product">
+        <img src="${pageContext.request.contextPath}/images/phones.jpg" alt="Sample Product">
         <div class="product-info">
             <h3>Sample Product</h3>
             <div>

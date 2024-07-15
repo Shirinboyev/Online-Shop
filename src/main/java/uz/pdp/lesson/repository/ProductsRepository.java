@@ -102,13 +102,9 @@ public class ProductsRepository implements BaseRepository<Products> {
                 .count(resultSet.getInt("count"))
                 .category(resultSet.getString("category"))
                 .imageUrl(resultSet.getString("image"))
+                .imageBase64(imageBase64)
                 .marketId(resultSet.getInt("market_id"))
                 .build();
-
-        if (imageBase64 != null) {
-            byte[] decodedBytes = Base64.getDecoder().decode(imageBase64);
-            product.setImageUrl(new String(decodedBytes));
-        }
         return product;
     }
     public Products getProductById(int productId) {
