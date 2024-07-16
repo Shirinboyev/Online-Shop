@@ -4,27 +4,25 @@ import uz.pdp.lesson.model.products.Products;
 import uz.pdp.lesson.repository.BaseRepository;
 import uz.pdp.lesson.repository.ProductsRepository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductService {
-    private Connection connection;
+import static uz.pdp.lesson.repository.BaseRepository.*;
 
-    public ProductService(Connection connection, ProductsRepository productsRepository) {
-        this.connection = connection;
-        this.productsRepository = productsRepository;
-    }
+public class ProductService {
     private static ProductService productService;
     private final ProductsRepository productsRepository;
     private static final MarketService marketService = MarketService.getInstance();
+    private Connection connection;
 
     private ProductService() {
         this.productsRepository = new ProductsRepository();
+        try {
+            this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static ProductService getInstance() {
@@ -46,6 +44,7 @@ public class ProductService {
         product.setImageBase64(base64Img);
         productsRepository.save(product);
     }
+
     public Products getProductById(int productId) {
         String sql = "SELECT * FROM product WHERE id = ?";
         try {
@@ -61,7 +60,7 @@ public class ProductService {
                 product.setDescription(resultSet.getString("description"));
                 product.setCount(resultSet.getInt("count"));
                 product.setCategory(resultSet.getString("category"));
-                product.setImageUrl(resultSet.getString("image_url"));
+                product.setImageUrl(resultSet.getString("image"));
                 product.setMarketId(resultSet.getInt("market_id"));
 
                 return product;
@@ -72,6 +71,7 @@ public class ProductService {
 
         return null;
     }
+
     public List<Products> getAllProducts() {
         return productsRepository.getAllProducts();
     }
@@ -84,6 +84,7 @@ public class ProductService {
         }
         return products;
     }
+
     public boolean deleteProductById(int id) {
         try (Connection connection = BaseRepository.getConnection()) {
             String query = "DELETE FROM product WHERE id = ?";

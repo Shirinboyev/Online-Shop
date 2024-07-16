@@ -56,9 +56,13 @@
     </div>
 
     <h1>
-        <a href="/">
+        <form action="/home" method="get">
             <button type="submit" style="color: #28a745">GO TO SHOP</button>
-        </a>
+        </form>
+
+    <%--        <a href="/">--%>
+<%--            <button type="submit" style="color: #28a745">GO TO SHOP</button>--%>
+<%--        </a>--%>
     </h1>
 
     <button onclick="showLogoutConfirmation()" class="btn">Log Out</button>

@@ -318,7 +318,11 @@
             <h3><%= product.getName() %></h3>
             <div>
                 <div class="price"><%= product.getPrice() %> UZS</div>
-                <button class="btn" onclick="addToCart(<%= product.getId() %>)">Savatchaga qo'shish</button>
+                <form action="${pageContext.request.contextPath}/addToCart" method="post">
+                    <input type="hidden" name="productId" value="<%= product.getId() %>">
+                    <input type="hidden" name="userId" value="<%= user.getId() %>">
+                    <button type="submit" class="btn">Savatchaga qo'shish</button>
+                </form>
             </div>
         </div>
     </div>

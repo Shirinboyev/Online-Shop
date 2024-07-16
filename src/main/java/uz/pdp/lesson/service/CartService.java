@@ -36,6 +36,23 @@ public class CartService {
         return cart;
     }
 
+    public void addProductToCart(int userId, Products product, int quantity) throws SQLException {
+        Cart cart = getCartByUserId(userId);
+        if (cart == null) {
+            createCartForUser(userId);
+            cart = getCartByUserId(userId);
+        }
+
+        String sql = "INSERT INTO cart_items (cart_id, product_id, quantity) VALUES (?, ?, ?) ";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, cart.getId());
+            statement.setInt(2, product.getId());
+            statement.setInt(3, quantity);
+            statement.executeUpdate();
+        }
+    }
+
+
     public List<CartItem> getCartItems(int cartId) throws SQLException {
         String sql = "SELECT * FROM cart_items WHERE cart_id = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
@@ -53,23 +70,6 @@ public class CartService {
         }
 
         return items;
-    }
-
-    public void addProductToCart(int userId, Products product, int quantity) throws SQLException {
-        Cart cart = getCartByUserId(userId);
-        if (cart == null) {
-            createCartForUser(userId);
-            cart = getCartByUserId(userId);
-        }
-
-        String sql = "INSERT INTO cart_items (cart_id, product_id, quantity) VALUES (?, ?, ?) " +
-                "ON DUPLICATE KEY UPDATE quantity = quantity + ?";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, cart.getId());
-        statement.setInt(2, product.getId());
-        statement.setInt(3, quantity);
-        statement.setInt(4, quantity);
-        statement.executeUpdate();
     }
 
     private void createCartForUser(int userId) throws SQLException {
