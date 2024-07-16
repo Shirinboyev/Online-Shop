@@ -10,7 +10,7 @@ import java.util.List;
 
 import static uz.pdp.lesson.repository.BaseRepository.*;
 
-public class UserService implements BaseService {
+public class UserService {
     private static UserService instance;
     private UserRepository userRepository = new UserRepository();
 

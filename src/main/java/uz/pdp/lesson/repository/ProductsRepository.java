@@ -11,7 +11,7 @@ public class ProductsRepository implements BaseRepository<Products> {
 
     private void forDriver() {
         try {
-            Class.forName("org.postgresql.Driver"); // Register the driver
+            Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("PostgreSQL JDBC Driver not found. Include it in your library path.", e);
         }

@@ -16,64 +16,46 @@ body {
     background-color: #fff;
     box-shadow: 0 0 20px rgba(0,0,0,0.1);
     border-radius: 12px;
+    text-align: center;
 }
 
 h2 {
-    text-align: center;
     color: #333;
     margin-bottom: 30px;
 }
 
-.market-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.market-info {
+    text-align: left;
+    margin-bottom: 30px;
 }
 
-.market-item {
-    background-color: #f8f9fa;
-    padding: 20px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    width: 100%;
-    max-width: 600px;
-    text-align: center;
-    position: relative;
+.market-info p {
+    color: #555;
+    font-size: 16px;
 }
 
-.market-item h3 {
+h3 {
     color: #007bff;
-    cursor: pointer;
-    text-decoration: underline;
-    margin-bottom: 15px;
-}
-
-.market-item h3:hover {
-    color: #0056b3;
+    margin-bottom: 20px;
 }
 
 .product-form {
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.product-form.active {
-    display: flex;
-}
-
-.market-item label {
+.product-form label {
     margin: 5px 0 2px;
     color: #555;
     width: 100%;
     text-align: left;
 }
 
-.market-item input,
-.market-item textarea,
-.market-item select,
-.market-item button {
+.product-form input,
+.product-form textarea,
+.product-form select,
+.product-form button {
     margin: 5px 0 15px;
     padding: 10px;
     border: 1px solid #ccc;
@@ -81,23 +63,23 @@ h2 {
     width: 100%;
 }
 
-.market-item button {
-    background-color: #28a745;
+.product-form button {
+    background-color: #007bff;
     color: white;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.market-item button:hover {
-    background-color: #218838;
+.product-form button:hover {
+    background-color: #0056b3;
 }
 
 .add-btn {
-    background-color: #007bff;
+    background-color: #28a745;
     color: white;
     transition: background-color 0.3s ease;
 }
 
 .add-btn:hover {
-    background-color: #0056b3;
+    background-color: #218838;
 }

@@ -22,7 +22,7 @@ public class MarketRepository implements BaseRepository<Market>{
     }
     private void forDriver() {
         try {
-            Class.forName("org.postgresql.Driver"); // Register the driver
+            Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("PostgreSQL JDBC Driver not found. Include it in your library path.", e);
         }
@@ -79,6 +79,26 @@ public class MarketRepository implements BaseRepository<Market>{
 
         return markets;
     }
+    public Market getMarketById(int marketId) {
+        Market market = null;
+        String query = "SELECT * FROM market WHERE id = ?";
 
+        try (Connection connection = BaseRepository.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, marketId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                market = new Market();
+                market.setId(resultSet.getInt("id"));
+                market.setName(resultSet.getString("name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return market;
+    }
 
 }
