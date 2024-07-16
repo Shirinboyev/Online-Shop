@@ -20,7 +20,7 @@ public class ProductsRepository implements BaseRepository<Products> {
     public void save(Products product) {
         forDriver();
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            String query = "INSERT INTO product (name, price, description, count, image_base64, market_id, category, create_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO product (name, price, description, count, image_base64, market_id, category, create_date,image) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, product.getName());
             statement.setDouble(2, product.getPrice());
@@ -29,6 +29,7 @@ public class ProductsRepository implements BaseRepository<Products> {
             statement.setString(5, product.getImageBase64());
             statement.setInt(6, product.getMarketId());
             statement.setString(7, product.getCategory());
+            statement.setString(9,product.getImageUrl());
             statement.setTimestamp(8, new Timestamp(System.currentTimeMillis()));
 
             System.out.println("Executing query: " + statement);

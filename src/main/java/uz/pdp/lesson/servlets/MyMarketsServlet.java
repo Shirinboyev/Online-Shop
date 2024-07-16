@@ -15,13 +15,15 @@ import uz.pdp.lesson.service.VendorService;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Base64;
 import java.util.List;
+import java.util.Objects;
 
 @MultipartConfig
 @WebServlet(name = "MyMarket", urlPatterns = "/myMarkets")
 public class MyMarketsServlet extends HttpServlet {
-    private static final String MY_PROJECT_PATH = "C:\\Users\\gayra\\OneDrive\\Desktop\\file\\Shopping-Project";
+    private static final String MY_PROJECT_PATH = "D:\\Java\\java-codes\\Online-Shop";
     private final ProductService productService = ProductService.getInstance();
     private final VendorService vendorService = VendorService.getInstance();
     private final UserService userService = UserService.getInstance();
@@ -39,7 +41,6 @@ public class MyMarketsServlet extends HttpServlet {
         }
         req.getRequestDispatcher("/myMarkets.jsp").forward(req, resp);
     }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
@@ -49,21 +50,25 @@ public class MyMarketsServlet extends HttpServlet {
             Integer ownerId = userService.getUserId(user);
             Part productImagePart = req.getPart("productImage");
             String fileName = Paths.get(productImagePart.getSubmittedFileName()).getFileName().toString();
-            String uploadPath = MY_PROJECT_PATH + "/src/main/webapp/uploads";
+            String uploadPath = getServletContext().getRealPath("/uploads");
+            System.out.println("Upload Path: " + uploadPath);
+
             byte[] bytes = productImagePart.getInputStream().readAllBytes();
             Base64.Encoder encoder = Base64.getEncoder();
             String base64Img = encoder.encodeToString(bytes);
+
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
-                uploadDir.mkdir();
+                uploadDir.mkdirs();
             } else {
                 System.out.println("Upload directory exists");
             }
 
             String filePath = uploadPath + File.separator + fileName;
             System.out.println("File uploaded to: " + filePath);
-            try {
-                Files.copy(productImagePart.getInputStream(), Paths.get(filePath));
+
+            try (InputStream input = productImagePart.getInputStream()) {
+                Files.copy(input, Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -82,14 +87,15 @@ public class MyMarketsServlet extends HttpServlet {
             System.out.println("Product Count: " + productCount);
             System.out.println("Product Category: " + productCategory);
             System.out.println("File Path: " + filePath);
+            System.out.println("Base64 Image: " + base64Img);
 
-            productService.addProduct(productCategory, marketId, productName, productPrice, productDescription, productCount, filePath,base64Img);
-
+            productService.addProduct(productCategory, marketId, productName, productPrice, productDescription, productCount, filePath, base64Img);
             List<Market> markets = vendorService.getMarketsByUserId(ownerId);
             req.setAttribute("markets", markets);
             req.setAttribute("user", user);
         }
         resp.sendRedirect("/vendorProfile");
     }
+
 
 }
