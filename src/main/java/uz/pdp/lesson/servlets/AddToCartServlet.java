@@ -1,7 +1,6 @@
 package uz.pdp.lesson.servlets;
 
 import uz.pdp.lesson.model.products.Products;
-import uz.pdp.lesson.service.BaseService;
 import uz.pdp.lesson.service.CartService;
 import uz.pdp.lesson.service.ProductService;
 

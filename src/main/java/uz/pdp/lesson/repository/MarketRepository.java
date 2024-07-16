@@ -100,5 +100,16 @@ public class MarketRepository implements BaseRepository<Market>{
 
         return market;
     }
+    public static boolean deleteMarket(int marketId) {
+        try (Connection connection = BaseRepository.getConnection();
+             PreparedStatement ps = connection.prepareStatement("DELETE FROM markets WHERE id = ?")) {
+            ps.setInt(1, marketId);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }

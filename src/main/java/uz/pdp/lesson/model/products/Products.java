@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 public class Products {
     private int id;
     private String name;
-    private double price;
+    private int price;
     private String description;
     private int count;
     private String category;
@@ -23,7 +23,7 @@ public class Products {
     private String imageBase64;
     private String imageUrl;
 
-    public Products(int id, String description, double price) {
+    public Products(int id, String description, int price) {
         this.id = id;
         this.name = description;
         this.price = price;

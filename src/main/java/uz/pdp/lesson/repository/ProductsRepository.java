@@ -91,7 +91,7 @@ public class ProductsRepository implements BaseRepository<Products> {
         Products product = Products.builder()
                 .id(resultSet.getInt("id"))
                 .name(resultSet.getString("name"))
-                .price(resultSet.getDouble("price"))
+                .price(resultSet.getInt("price"))
                 .description(resultSet.getString("description"))
                 .count(resultSet.getInt("count"))
                 .category(resultSet.getString("category"))
@@ -116,7 +116,7 @@ public class ProductsRepository implements BaseRepository<Products> {
                 product = new Products();
                 product.setId(rs.getInt("id"));
                 product.setName(rs.getString("name"));
-                product.setPrice(rs.getDouble("price"));
+                product.setPrice(rs.getInt("price"));
                 product.setImageUrl(rs.getString("image_base64"));
             }
 

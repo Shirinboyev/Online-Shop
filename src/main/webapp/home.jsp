@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/homePage.css">
     <title>Online Market</title>
     <style>
-        /* Your existing styles here */
+        /* General Styles */
         * {
             margin: 0;
             padding: 0;
@@ -30,14 +30,14 @@
 
         /* Header Styles */
         .header {
-            background-color: #3f51b5;
+            background-color: #4CAF50;
             color: #fff;
-            padding: 15px 0;
+            padding: 10px 0;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            animation: fadeInDown 1s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: slideInDown 1s ease-in-out;
         }
 
         .header .logo {
@@ -47,32 +47,51 @@
 
         .header .nav {
             display: flex;
-            gap: 20px;
+            gap: 15px;
         }
 
         .header .nav a {
             color: #fff;
             text-decoration: none;
             font-weight: bold;
+            transition: color 0.3s;
         }
 
         .header .nav a:hover {
-            text-decoration: underline;
+            color: #ffeb3b;
         }
 
         /* Search Bar Styles */
         .search-bar {
-            margin: 20px 0;
+            margin: 10px 0;
             display: flex;
             justify-content: center;
+            align-items: center;
+            position: relative;
         }
 
         .search-bar input {
-            width: 50%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            animation: fadeIn 1.5s ease-in-out;
+            width: 70%;
+            padding: 10px 40px;
+            border: 2px solid #4CAF50;
+            border-radius: 25px;
+            outline: none;
+            font-size: 1em;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .search-bar input:focus {
+            border-color: #388E3C;
+        }
+
+        .search-bar .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #000;
+            font-size: 1.2em;
+            pointer-events: none;
         }
 
         /* Banner Styles */
@@ -89,19 +108,19 @@
             max-width: 100%;
             height: auto;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 1.5s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
         }
 
         .banner button {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.3);
             color: white;
             border: none;
             padding: 10px;
-            font-size: 1.2em;
+            font-size: 1.5em;
             cursor: pointer;
             transition: background 0.3s;
         }
@@ -125,31 +144,32 @@
             gap: 20px;
             justify-content: center;
             padding: 20px 0;
+            animation: fadeInUp 1s ease-in-out;
         }
 
         .product-card {
             background-color: #fff;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
             overflow: hidden;
-            width: 200px;
+            width: 23%;
+            max-width: 250px;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding-bottom: 10px;
-            transition: transform 0.3s;
-            animation: fadeInUp 1s ease-in-out;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .product-card:hover {
-            transform: translateY(-10px);
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
 
         .product-card img {
             width: 100%;
-            height: 150px;
+            height: 300px; /* Increased height for a larger vertical view */
             object-fit: cover;
         }
 
@@ -162,18 +182,18 @@
         }
 
         .product-card .product-info h3 {
-            font-size: 1.1em;
+            font-size: 1.2em;
             margin-bottom: 10px;
         }
 
         .product-card .product-info .price {
-            font-size: 1.2em;
+            font-size: 1.3em;
             color: #4CAF50;
             margin-bottom: 10px;
         }
 
         .product-card .product-info .btn {
-            background-color: #3f51b5;
+            background-color: #4CAF50;
             color: #fff;
             padding: 10px;
             text-decoration: none;
@@ -183,20 +203,20 @@
         }
 
         .product-card .product-info .btn:hover {
-            background-color: #303f9f;
+            background-color: #388E3C;
         }
 
         /* Footer Styles */
         .footer {
-            background-color: #3f51b5;
+            background-color: #4CAF50;
             color: #fff;
             text-align: center;
             padding: 20px 0;
-            animation: fadeInUp 1.5s ease-in-out;
+            animation: slideInUp 1s ease-in-out;
         }
 
         .footer p {
-            font-size: 0.9em;
+            font-size: 1em;
         }
 
         /* Animations */
@@ -220,10 +240,21 @@
             }
         }
 
-        @keyframes fadeInDown {
+        @keyframes slideInDown {
             from {
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -238,9 +269,11 @@
         <div class="logo">
             ONLINE MARKET
         </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Mahsulotlar va turkumlar izlash">
+            <span class="search-icon">&#128269;</span>
+        </div>
         <nav class="nav">
-            <a href="catalog.jsp" class="btn">Katalog</a>
-            <a href="/userProfile" class="btn">Savat</a>
             <%
                 HttpSession session1 = request.getSession(false);
                 User user = (session1 != null) ? (User) session1.getAttribute("user") : null;
@@ -267,9 +300,6 @@
                 }
             %>
         </nav>
-    </div>
-    <div class="search-bar">
-        <input type="text" placeholder="Mahsulotlar va turkumlar izlash">
     </div>
 </header>
 
@@ -313,11 +343,11 @@
             for (Products product : products) {
     %>
     <div class="product-card">
-        <img src="data:image/jpeg;base64,<%=product.getImageBase64()%>" style="width: 150px; height: 150px;" alt="Image not found">
+        <img src="data:image/jpeg;base64,<%=product.getImageBase64()%>" alt="Image not found">
         <div class="product-info">
             <h3><%= product.getName() %></h3>
             <div>
-                <div class="price"><%= product.getPrice() %> UZS</div>
+                <div class="price"><%= product.getPrice() %>$</div>
                 <form action="${pageContext.request.contextPath}/addToCart" method="post">
                     <input type="hidden" name="productId" value="<%= product.getId() %>">
                     <input type="hidden" name="userId" value="<%= user.getId() %>">
@@ -335,20 +365,6 @@
         }
     %>
 </section>
-
-<script>
-    function addToCart(productId) {
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", "${pageContext.request.contextPath}/addToCart", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                alert("Product added to cart successfully!");
-            }
-        };
-        xhr.send("productId=" + productId);
-    }
-</script>
 
 <footer class="footer">
     <div class="container">

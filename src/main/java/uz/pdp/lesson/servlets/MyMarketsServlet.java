@@ -75,7 +75,7 @@ public class MyMarketsServlet extends HttpServlet {
 
             int marketId = Integer.parseInt(req.getParameter("marketId"));
             String productName = req.getParameter("productName");
-            double productPrice = Double.parseDouble(req.getParameter("productPrice"));
+            int productPrice = Integer.parseInt(req.getParameter("productPrice"));
             String productDescription = req.getParameter("productDescription");
             int productCount = Integer.parseInt(req.getParameter("productCount"));
             String productCategory = req.getParameter("productCategory");

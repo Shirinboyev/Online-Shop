@@ -65,7 +65,7 @@ public class MarketDetailsServlet extends HttpServlet {
 
         Products product = new Products();
         product.setName(productName);
-        product.setPrice(Double.parseDouble(productPrice));
+        product.setPrice(Integer.parseInt(productPrice));
         product.setDescription(productDescription);
         product.setCount(Integer.parseInt(productCount));
         product.setCategory(String.valueOf(Categories.valueOf(productCategory)));

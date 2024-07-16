@@ -10,7 +10,7 @@ import uz.pdp.lesson.service.UserService;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-@WebServlet(name = "Login", urlPatterns = "/login")
+    @WebServlet(name = "Login", urlPatterns = "/login")
 public class LogInServlet extends HttpServlet {
     UserService userService = UserService.getInstance();
     private static final Logger logger = Logger.getLogger(LogInServlet.class.getName());

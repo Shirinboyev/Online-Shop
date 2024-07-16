@@ -67,5 +67,27 @@ public class UserRepository implements BaseRepository<User> {
         }
         return users;
     }
+    public static boolean deleteUser(int userId) {
+        try (Connection connection = BaseRepository.getConnection();
+             PreparedStatement ps = connection.prepareStatement("DELETE FROM users WHERE id = ?")) {
+            ps.setInt(1, userId);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static boolean deleteVendor(int vendorId) {
+        try (Connection connection = BaseRepository.getConnection();
+             PreparedStatement ps = connection.prepareStatement("DELETE FROM vendors WHERE id = ?")) {
+            ps.setInt(1, vendorId);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }

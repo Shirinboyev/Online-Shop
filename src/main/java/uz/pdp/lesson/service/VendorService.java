@@ -2,14 +2,16 @@ package uz.pdp.lesson.service;
 
 import uz.pdp.lesson.model.market.Market;
 import uz.pdp.lesson.repository.MarketRepository;
+import uz.pdp.lesson.repository.UserRepository;
 
 import java.util.List;
 
 public class VendorService {
     private static VendorService instance = new VendorService();
     private MarketRepository marketRepository = new MarketRepository();
+    private UserRepository userRepository = new UserRepository();
 
-    private VendorService() {}
+    public VendorService() {}
 
     public static VendorService getInstance() {
         return instance;
@@ -34,5 +36,9 @@ public class VendorService {
 
     public List<Market> getMarketsByUserId(int ownerId) {
         return marketRepository.getMarketsByOwnerId(ownerId);
+    }
+
+    public boolean deleteVendor(int id) {
+        return userRepository.deleteVendor(id);
     }
 }
