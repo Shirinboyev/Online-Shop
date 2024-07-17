@@ -89,4 +89,11 @@ public class CartService {
         statement.setInt(1, userId);
         statement.executeUpdate();
     }
+
+    public void deleteItemsByCartId(int cartId) throws SQLException {
+        String sql = "Delete from cart_items where cart_id = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, cartId);
+        statement.executeUpdate();
+    }
 }

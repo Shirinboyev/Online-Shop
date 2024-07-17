@@ -8,14 +8,32 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public class OrderDetailsRepository implements BaseRepository<OrderDetails>{
+public class OrderDetailsRepository implements BaseRepository<OrderDetails> {
+    private static final String URL = "jdbc:postgresql://localhost:5432/shopping"; // Replace with your database URL
+    private static final String USER = "postgres"; // Replace with your database username
+    private static final String PASSWORD = "1111"; // Replace with your database password
+
+    private static OrderDetailsRepository orderDetailsInstance;
+
+    private OrderDetailsRepository() {
+        // Private constructor to prevent instantiation
+    }
+
+    public static OrderDetailsRepository getInstance() {
+        if (orderDetailsInstance == null) {
+            orderDetailsInstance = new OrderDetailsRepository();
+        }
+        return orderDetailsInstance;
+    }
+
     @Override
     public void save(OrderDetails orderDetails) {
-        String query = "INSERT INTO users (price, basket_id) VALUES (?, ?)";
+        String query = "INSERT INTO order_details (price, cart_id) VALUES (?, ?)";
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setDouble(1, orderDetails.getPrice());
-            statement.setInt(2, orderDetails.getBasket_id());
+            statement.setInt(2, orderDetails.getCart_id()); // Ensure you use the correct getter method
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -23,11 +41,13 @@ public class OrderDetailsRepository implements BaseRepository<OrderDetails>{
 
     @Override
     public OrderDetails get(Integer id) {
+        // Implementation to retrieve an order details by ID
         return null;
     }
 
     @Override
     public List<OrderDetails> getAll() {
-        return List.of();
+        // Implementation to retrieve all order details
+        return null;
     }
 }

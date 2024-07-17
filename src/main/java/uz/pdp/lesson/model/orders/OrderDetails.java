@@ -15,5 +15,5 @@ import java.sql.Timestamp;
 public class OrderDetails {
     private int id;
     private double price;
-    private int basket_id;
+    private int cart_id;
 }
