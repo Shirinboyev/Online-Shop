@@ -1,5 +1,6 @@
 <%@ page import="uz.pdp.lesson.model.orders.OrderDetails" %>
-<%@ page import="uz.pdp.lesson.model.user.User" %><%--
+<%@ page import="uz.pdp.lesson.model.user.User" %>
+<%@ page import="java.sql.Timestamp" %><%--
   Created by IntelliJ IDEA.
   User: sherz
   Date: 7/17/2024
@@ -21,6 +22,7 @@
 
     if (user != null && orderDetails != null) {
         double price = orderDetails.getPrice();
+        Timestamp orderedDate = orderDetails.getOrdered_date();
         String email = user.getEmail();
         String fullname = user.getFullname();
 %>
@@ -33,6 +35,8 @@
 <div class="order-details">
     <h2>Order Details</h2>
     <p>Price: <%= price %> UZS</p>
+    <br>
+    <p>Ordered time : <%= orderedDate %> </p>
 
 </div>
 <div>

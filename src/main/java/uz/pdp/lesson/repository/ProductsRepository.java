@@ -72,7 +72,7 @@ public class ProductsRepository implements BaseRepository<Products> {
         forDriver();
         List<Products> productsList = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            String query = "SELECT * FROM product";
+            String query = "SELECT * FROM product where count > 0";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {

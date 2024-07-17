@@ -1,5 +1,6 @@
 package uz.pdp.lesson.service;
 
+import uz.pdp.lesson.model.cart.CartItem;
 import uz.pdp.lesson.model.products.Products;
 import uz.pdp.lesson.repository.BaseRepository;
 import uz.pdp.lesson.repository.ProductsRepository;
@@ -96,5 +97,22 @@ public class ProductService {
             e.printStackTrace();
         }
         return false;
+    }
+
+
+    public void reduceAmountOfProductByProductId(List<CartItem> items) {
+        String query = "UPDATE product SET count = count - 1 WHERE id = ?";
+        try (Connection connection = BaseRepository.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+
+            for (CartItem item : items) {
+                int productId = item.getProductId();
+                ps.setInt(1, productId);
+                ps.addBatch();
+            }
+            ps.executeBatch();  // Execute all updates as a batch
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

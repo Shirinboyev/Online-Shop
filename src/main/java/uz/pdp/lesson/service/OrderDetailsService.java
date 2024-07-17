@@ -1,12 +1,15 @@
 package uz.pdp.lesson.service;
 
+import uz.pdp.lesson.model.cart.CartItem;
 import uz.pdp.lesson.model.orders.OrderDetails;
 import uz.pdp.lesson.repository.OrderDetailsRepository;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class OrderDetailsService {
     private static OrderDetailsService orderDetailsService;
+    private static final ProductService productService = ProductService.getInstance();
     private static final OrderDetailsRepository orderDetailsRepository = OrderDetailsRepository.getInstance();
     private static final CartService cartService = CartService.getInstance();
 
@@ -21,8 +24,9 @@ public class OrderDetailsService {
         return orderDetailsService;
     }
 
-    public void save(OrderDetails orderDetails) throws SQLException {
+    public void save(OrderDetails orderDetails, List<CartItem> items) throws SQLException {
         orderDetailsRepository.save(orderDetails);
         cartService.deleteItemsByCartId(orderDetails.getCart_id());
+        productService.reduceAmountOfProductByProductId(items);
     }
 }

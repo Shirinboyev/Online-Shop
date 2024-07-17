@@ -47,6 +47,7 @@ public class LogInServlet extends HttpServlet {
                     req.getRequestDispatcher("adminProfile.jsp").forward(req, resp);
                     break;
                 case CUSTOMER:
+                    req.setAttribute("user", user);
                     req.getRequestDispatcher("userProfile.jsp").forward(req, resp);
                     break;
                 case VENDOR:

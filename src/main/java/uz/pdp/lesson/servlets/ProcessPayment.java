@@ -19,7 +19,11 @@ import uz.pdp.lesson.service.UserService;
 import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Locale;
 
 @WebServlet(name = "processPayment", value = "/processPayment")
 public class ProcessPayment extends HttpServlet {
@@ -51,9 +55,10 @@ public class ProcessPayment extends HttpServlet {
                     OrderDetails orderDetails = OrderDetails.builder()
                             .cart_id(cart.getId())
                             .price(sum)
+                            .ordered_date(Timestamp.valueOf(LocalDateTime.now()))
                             .build();
 
-                    orderDetailsService.save(orderDetails);
+                    orderDetailsService.save(orderDetails, items);
 
                     req.setAttribute("orderDetails", orderDetails);
                     req.setAttribute("user", user);
