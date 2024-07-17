@@ -4,18 +4,29 @@ import uz.pdp.lesson.model.cart.Cart;
 import uz.pdp.lesson.model.cart.CartItem;
 import uz.pdp.lesson.model.products.Products;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.security.PublicKey;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static uz.pdp.lesson.repository.BaseRepository.*;
+
 public class CartService {
     private Connection connection;
+    public static CartService cartService;
 
-    public CartService(Connection connection) {
-        this.connection = connection;
+    private CartService() {
+        try {
+            this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static CartService getInstance() {
+        if (cartService == null) {
+            cartService = new CartService();
+        }
+        return cartService;
     }
 
     public Cart getCartByUserId(int userId) throws SQLException {

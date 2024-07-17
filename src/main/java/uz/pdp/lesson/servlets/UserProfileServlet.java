@@ -8,22 +8,31 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import uz.pdp.lesson.model.cart.Cart;
+import uz.pdp.lesson.model.cart.CartItem;
 import uz.pdp.lesson.model.products.Products;
 import uz.pdp.lesson.model.user.User;
 import uz.pdp.lesson.repository.ProductsRepository;
+import uz.pdp.lesson.service.CartService;
+import uz.pdp.lesson.service.UserService;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/userProfile")
 public class UserProfileServlet extends HttpServlet {
 
     private ProductsRepository productsRepository;
+    private CartService cartService;
+    private UserService userService;
 
     @Override
     public void init() throws ServletException {
-
         productsRepository = new ProductsRepository();
+        cartService = CartService.getInstance();
+        userService = UserService.getInstance();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,9 +43,16 @@ public class UserProfileServlet extends HttpServlet {
             return;
         }
         request.setAttribute("user", user);
-
-        List<Products> cartItems = (List<Products>) session.getAttribute("cartItems");
-        request.setAttribute("cartItems", cartItems);
+        Cart cartByUserId =null;
+        Integer userId = userService.getUserId(user);
+        try {
+            cartByUserId = cartService.getCartByUserId(userId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        List<CartItem> items = cartByUserId.getItems();
+        request.setAttribute("cartByUserId", cartByUserId);
+        request.setAttribute("items", items);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("userProfile.jsp");
         dispatcher.forward(request, response);

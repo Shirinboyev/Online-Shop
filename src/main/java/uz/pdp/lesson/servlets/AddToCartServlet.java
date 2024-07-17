@@ -24,7 +24,7 @@ public class AddToCartServlet extends HttpServlet {
     public void init() throws ServletException {
         try {
             Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/shopping", "postgres", "1111");
-            cartService = new CartService(connection);
+            cartService = CartService.getInstance();
             productService = ProductService.getInstance();
         } catch (SQLException e) {
             throw new ServletException("Unable to establish database connection", e);
