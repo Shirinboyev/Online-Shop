@@ -110,4 +110,7 @@ public class UserService {
     public boolean deleteUser(int id) {
         return userRepository.deleteUser(id);
     }
+    public User getUserById(int userId) {
+        return userRepository.getUserById(userId);
+    }
 }

@@ -22,4 +22,9 @@ public class CartServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("cartPage.jsp");
         dispatcher.forward(request, response);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPost(req, resp);
+    }
 }

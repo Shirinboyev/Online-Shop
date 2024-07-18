@@ -89,5 +89,29 @@ public class UserRepository implements BaseRepository<User> {
             return false;
         }
     }
+    public User getUserById(int userId) {
+        User user = null;
+        String query = "SELECT * FROM users WHERE id = ?";
+
+        try (Connection connection = BaseRepository.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setFullname(resultSet.getString("fullname"));
+                user.setUsername(resultSet.getString("username"));
+                user.setEmail(resultSet.getString("email"));
+                user.setAge(resultSet.getInt("age"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
 
 }

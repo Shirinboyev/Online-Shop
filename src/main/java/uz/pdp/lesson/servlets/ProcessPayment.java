@@ -16,21 +16,18 @@ import uz.pdp.lesson.service.OrderDetailsService;
 import uz.pdp.lesson.service.ProductService;
 import uz.pdp.lesson.service.UserService;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Locale;
 
 @WebServlet(name = "processPayment", value = "/processPayment")
 public class ProcessPayment extends HttpServlet {
-    UserService userService = UserService.getInstance();
-    CartService cartService = CartService.getInstance();
-    ProductService productService = ProductService.getInstance();
-    OrderDetailsService orderDetailsService = OrderDetailsService.getInstance();
+    private final UserService userService = UserService.getInstance();
+    private final CartService cartService = CartService.getInstance();
+    private final ProductService productService = ProductService.getInstance();
+    private final OrderDetailsService orderDetailsService = OrderDetailsService.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -41,6 +38,13 @@ public class ProcessPayment extends HttpServlet {
             try {
                 Integer userId = userService.getUserId(user);
                 String cardNumber = req.getParameter("cardNumber");
+
+                if (cardNumber == null || cardNumber.isEmpty()) {
+                    req.setAttribute("error", "Card number is required.");
+                    req.getRequestDispatcher("/checkout.jsp").forward(req, resp);
+                    return;
+                }
+
                 Cart cart = cartService.getCartByUserId(userId);
 
                 if (cart != null) {
@@ -50,6 +54,7 @@ public class ProcessPayment extends HttpServlet {
                     for (CartItem item : items) {
                         Products product = productService.getProductById(item.getProductId());
                         sum += item.getQuantity() * product.getPrice();
+                        item.setPaid(true); // Mark the item as paid
                     }
 
                     OrderDetails orderDetails = OrderDetails.builder()
@@ -60,24 +65,20 @@ public class ProcessPayment extends HttpServlet {
 
                     orderDetailsService.save(orderDetails, items);
 
+                    cartService.deleteItemsByCartId(cart.getId()); // Clear the cart after payment
+
                     req.setAttribute("orderDetails", orderDetails);
                     req.setAttribute("user", user);
 
-                    // Forward to processPayment.jsp
                     req.getRequestDispatcher("/processPayment.jsp").forward(req, resp);
-
                 } else {
-                    // Handle case where cart is null
                     throw new ServletException("Cart not found for user");
                 }
-
             } catch (SQLException e) {
                 throw new ServletException("Error processing payment", e);
             }
         } else {
-            // Handle case where user is null
-            resp.sendRedirect("/login.jsp"); // Redirect to login page or appropriate error page
+            resp.sendRedirect("/login.jsp");
         }
     }
-
 }

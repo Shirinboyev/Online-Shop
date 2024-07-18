@@ -19,11 +19,13 @@ import java.nio.file.StandardCopyOption;
 import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
-
+/*
+D:\Java\java-codes\Online-Shop
+*/
 @MultipartConfig
 @WebServlet(name = "MyMarket", urlPatterns = "/myMarkets")
 public class MyMarketsServlet extends HttpServlet {
-    private static final String MY_PROJECT_PATH = "D:\\Java\\java-codes\\Online-Shop";
+    private static final String MY_PROJECT_PATH = "C:\\Users\\gayra\\OneDrive\\Desktop\\file\\Shopping-Project";
     private final ProductService productService = ProductService.getInstance();
     private final VendorService vendorService = VendorService.getInstance();
     private final UserService userService = UserService.getInstance();

@@ -1,5 +1,6 @@
 package uz.pdp.lesson.repository;
 
+import uz.pdp.lesson.model.orders.OrderDetails;
 import uz.pdp.lesson.model.products.Products;
 
 import java.sql.*;
@@ -29,7 +30,7 @@ public class ProductsRepository implements BaseRepository<Products> {
             statement.setString(5, product.getImageBase64());
             statement.setInt(6, product.getMarketId());
             statement.setString(7, product.getCategory());
-            statement.setString(9,product.getImageUrl());
+            statement.setString(9, product.getImageUrl());
             statement.setTimestamp(8, new Timestamp(System.currentTimeMillis()));
 
             System.out.println("Executing query: " + statement);
@@ -101,31 +102,6 @@ public class ProductsRepository implements BaseRepository<Products> {
                 .build();
         return product;
     }
-    public Products getProductById(int productId) {
-        Products product = null;
-        String query = "SELECT * FROM product WHERE id = ?";
-
-
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setInt(1, productId);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                product = new Products();
-                product.setId(rs.getInt("id"));
-                product.setName(rs.getString("name"));
-                product.setPrice(rs.getInt("price"));
-                product.setImageUrl(rs.getString("image_base64"));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return product;
-    }
 
     public List<Products> getProductsByMarketId(Integer marketId) {
         forDriver();
@@ -146,6 +122,36 @@ public class ProductsRepository implements BaseRepository<Products> {
             e.printStackTrace();
         }
         return productsList;
+    }
+    public List<Products> getProductsByIds(List<Integer> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        String sql = "SELECT * FROM product WHERE id IN (" + String.join(",", ids.stream().map(String::valueOf).toArray(String[]::new)) + ")";
+        List<Products> products = new ArrayList<>();
+
+        try (Connection connection = BaseRepository.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+
+            while (resultSet.next()) {
+                Products product = new Products();
+                product.setId(resultSet.getInt("id"));
+                product.setName(resultSet.getString("name"));
+                product.setPrice(resultSet.getInt("price"));
+                product.setDescription(resultSet.getString("description"));
+                product.setCount(resultSet.getInt("count"));
+                product.setCategory(resultSet.getString("category"));
+                product.setImageUrl(resultSet.getString("image"));
+                product.setMarketId(resultSet.getInt("market_id"));
+                product.setImageBase64(resultSet.getString("image_base64")); // Assuming this is the correct field
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
     }
 
 }

@@ -1,16 +1,18 @@
 package uz.pdp.lesson.model.cart;
 
-
+import lombok.Data;
 import uz.pdp.lesson.model.products.Products;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Data
 public class Cart {
     private int id;
     private int userId;
     private Date createDate;
+    private boolean isPaid = false;
     private List<CartItem> items;
 
     public Cart() {
@@ -21,39 +23,9 @@ public class Cart {
         this.userId = userId;
         this.createDate = new Date();
         this.items = new ArrayList<>();
+        this.isPaid = false; // Default to unpaid
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public List<CartItem> getItems() {
-        return items;
-    }
-
-    public void setItems(List<CartItem> items) {
-        this.items = items;
-    }
     public void addProduct(Products product, int quantity) {
         for (CartItem item : items) {
             if (item.getProductId() == product.getId()) {
@@ -61,6 +33,13 @@ public class Cart {
                 return;
             }
         }
-        this.items.add(new CartItem(this.id, product.getId(), quantity));
+        this.items.add(new CartItem(this.id, product.getId(), quantity, false));
+    }
+
+    public void setPaid(boolean paid) {
+        this.isPaid = paid;
+        for (CartItem item : items) {
+            item.setPaid(paid);
+        }
     }
 }

@@ -1,13 +1,16 @@
 package uz.pdp.lesson.service;
 
+import uz.pdp.lesson.model.cart.Cart;
 import uz.pdp.lesson.model.cart.CartItem;
 import uz.pdp.lesson.model.products.Products;
 import uz.pdp.lesson.repository.BaseRepository;
+import uz.pdp.lesson.repository.CartDao;
 import uz.pdp.lesson.repository.ProductsRepository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static uz.pdp.lesson.repository.BaseRepository.*;
 
@@ -15,7 +18,11 @@ public class ProductService {
     private static ProductService productService;
     private final ProductsRepository productsRepository;
     private static final MarketService marketService = MarketService.getInstance();
+    private List<Products> productList;
     private Connection connection;
+    private List<CartItem> cartItems;
+    private final CartDao cartDao = CartDao.getInstance();
+
 
     private ProductService() {
         this.productsRepository = new ProductsRepository();
@@ -115,4 +122,15 @@ public class ProductService {
             e.printStackTrace();
         }
     }
+
+    public List<Products> getArchivedProductsByUserId(int userId) throws SQLException {
+        List<CartItem> cartItems = cartDao.getCartItemsByUserId(userId);
+        List<Integer> archivedProductIds = cartItems.stream()
+                .filter(CartItem::isPaid)
+                .map(CartItem::getProductId)
+                .collect(Collectors.toList());
+
+        return productsRepository.getProductsByIds(archivedProductIds);
+    }
+
 }

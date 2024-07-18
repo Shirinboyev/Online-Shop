@@ -16,5 +16,6 @@ public class OrderDetails {
     private int id;
     private double price;
     private int cart_id;
+    private int userId;
     private Timestamp ordered_date;
 }
