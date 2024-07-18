@@ -132,5 +132,17 @@ public class ProductService {
 
         return productsRepository.getProductsByIds(archivedProductIds);
     }
+    public boolean deleteProductsByMarketId(int id) {
+        try (Connection connection = BaseRepository.getConnection()) {
+            String query = "DELETE FROM product WHERE id = ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            int affectedRows = ps.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }

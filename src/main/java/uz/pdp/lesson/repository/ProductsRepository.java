@@ -123,6 +123,7 @@ public class ProductsRepository implements BaseRepository<Products> {
         }
         return productsList;
     }
+
     public List<Products> getProductsByIds(List<Integer> ids) {
         if (ids == null || ids.isEmpty()) {
             return new ArrayList<>();
@@ -154,4 +155,40 @@ public class ProductsRepository implements BaseRepository<Products> {
         return products;
     }
 
+    public List<Products> searchProducts(String query) {
+        List<Products> products = new ArrayList<>();
+        String sql = "SELECT * FROM product WHERE name ILIKE ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, "%" + query + "%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Products product = new Products();
+                product.setId(rs.getInt("id"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getInt("price"));
+                product.setDescription(rs.getString("description"));
+                product.setCount(rs.getInt("count"));
+                product.setCategory(rs.getString("category"));
+                product.setImageUrl(rs.getString("image"));
+                product.setImageBase64(rs.getString("image_base64"));
+                product.setMarketId(rs.getInt("market_id"));
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
+        public void deleteProductsByMarketId(int productId) {
+            String query = "DELETE FROM product WHERE id = ?";
+            try (Connection connection = BaseRepository.getConnection();
+                 PreparedStatement ps = connection.prepareStatement(query)) {
+                ps.setInt(1, productId);
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+        }
+    }
 }

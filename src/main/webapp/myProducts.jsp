@@ -10,8 +10,8 @@
 </head>
 <body>
 <div class="navbar">
-    <a href="${pageContext.request.contextPath}/">
-        <h1>want to shop?</h1>
+    <a href="${pageContext.request.contextPath}/vendorProfile">
+        <h1>Go to profile</h1>
     </a>
 </div>
 <div class="container">
@@ -27,6 +27,10 @@
             <img src="data:image/jpeg;base64,<%=product.getImageBase64()%>" style="width: 150px; height: 150px;" alt="Image not found">
             <h2><%= product.getName() %></h2>
             <p>Price: $<%= product.getPrice() %></p>
+            <form action="${pageContext.request.contextPath}/deleteProduct" method="post">
+                <input type="hidden" name="productId" value="<%= product.getId() %>">
+                <button type="submit" class="delete-btn">Delete</button>
+            </form>
         </div>
         <%
             }

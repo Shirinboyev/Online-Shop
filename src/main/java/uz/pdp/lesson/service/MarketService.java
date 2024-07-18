@@ -32,4 +32,8 @@ public class MarketService  {
         }
         return marketsId;
     }
+    public void deleteMarket(int marketId) {
+        productsRepository.deleteProductsByMarketId(marketId);
+        marketRepository.deleteMarketById(marketId);
+    }
 }

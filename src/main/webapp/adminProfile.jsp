@@ -19,6 +19,7 @@
             font-family: 'Arial', sans-serif;
             background-color: #eef2f7;
             color: #333;
+            position: relative;
         }
         .container {
             margin-top: 50px;
@@ -96,9 +97,17 @@
         #logoutConfirmation button {
             margin: 5px;
         }
+        .logout-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
     </style>
 </head>
 <body>
+<div class="logout-button">
+    <button onclick="showLogoutConfirmation()" class="btn btn-danger">Log Out</button>
+</div>
 <div class="container animate__animated animate__fadeIn">
     <header class="header">
         <h1>Admin Profile</h1>
@@ -170,7 +179,6 @@
         <%
             }
         %>
-        <button onclick="showLogoutConfirmation()" class="btn btn-danger animate__animated animate__fadeInUp">Log Out</button>
 
         <div id="logoutConfirmation" style="display:none;">
             <p>Are you sure you want to log out?</p>

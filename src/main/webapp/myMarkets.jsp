@@ -11,13 +11,20 @@
 <body>
 <div class="container">
     <h2>Your Markets</h2>
+    <form action="vendorProfile">
+        <button>Go to profile</button>
+    </form>
     <% if (request.getAttribute("markets") != null) { %>
     <div class="market-list">
         <% for (Market market : (List<Market>) request.getAttribute("markets")) { %>
         <div class="market-item">
-            <form action="${pageContext.request.contextPath}/marketDetails" method="get">
+            <form action="${pageContext.request.contextPath}/marketDetails" method="get" style="display: inline-block;">
                 <input type="hidden" name="marketId" value="<%= market.getId() %>">
                 <button type="submit" class="market-name-btn"><%= market.getName() %></button>
+            </form>
+            <form action="${pageContext.request.contextPath}/deleteMarket" method="post" style="display: inline-block;">
+                <input type="hidden" name="marketId" value="<%= market.getId() %>">
+                <button type="submit" class="delete-btn">Delete</button>
             </form>
         </div>
         <% } %>
