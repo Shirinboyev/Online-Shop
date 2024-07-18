@@ -9,6 +9,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/homePage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <title>Online Market</title>
     <style>
         * {
@@ -18,7 +22,7 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             background-color: #f5f5f5;
             color: #333;
         }
@@ -87,12 +91,11 @@
 
         .search-bar .search-icon {
             position: absolute;
-            right: 15px;
+            left: 15px;
             top: 50%;
             transform: translateY(-50%);
             color: #000;
             font-size: 1.2em;
-            pointer-events: none;
         }
 
         /* Banner Styles */
@@ -148,7 +151,6 @@
             animation: fadeInUp 1s ease-in-out;
         }
 
-
         .product-card {
             background-color: #fff;
             border: 1px solid #ddd;
@@ -162,6 +164,7 @@
             flex-direction: column;
             justify-content: space-between;
             transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeIn 1s ease-in-out;
         }
 
         .product-card:hover {
@@ -253,7 +256,6 @@
             }
         }
 
-
         @keyframes slideInUp {
             from {
                 opacity: 0;
@@ -267,15 +269,16 @@
     </style>
 </head>
 <body>
-<header class="header">
+<header class="header animate__animated animate__fadeInDown">
     <div class="container">
         <div class="logo">
             ONLINE MARKET
         </div>
         <div class="search-bar">
             <form action="${pageContext.request.contextPath}/search" method="get">
+                <i class="fas fa-search search-icon"></i>
                 <input type="text" name="query" placeholder="Mahsulotlar va turkumlar izlash" required>
-                <button type="submit" class="search-icon">&#128269;</button>
+                <button type="submit" style="display: none;"></button>
             </form>
         </div>
         <nav class="nav">
@@ -340,7 +343,7 @@
     }
 </script>
 
-<h1 style="padding-left: 30px">Tavsiyalar</h1>
+<h1 class="animate__animated animate__fadeInUp" style="padding-left: 30px">Tavsiyalar</h1>
 <section class="products">
     <%
         @SuppressWarnings("unchecked")
@@ -352,12 +355,16 @@
         if (products != null && !products.isEmpty()) {
             for (Products product : products) {
     %>
-    <div class="product-card">
+    <div class="product-card" data-aos="fade-up">
         <img src="data:image/jpeg;base64,<%= product.getImageBase64() %>" alt="Image not found">
         <div class="product-info">
             <h3><%= product.getName() %></h3>
             <div>
                 <div class="price"><%= product.getPrice() %> $</div>
+                <%
+                    User curUser = (User) session.getAttribute("user");
+                    if (curUser != null){
+                %>
                 <form action="${pageContext.request.contextPath}/addToCart" method="post">
                     <input type="hidden" name="productId" value="<%= product.getId() %>">
                     <% if (user != null) { %>
@@ -365,6 +372,9 @@
                     <% } %>
                     <button type="submit" class="btn">Savatchaga qo'shish</button>
                 </form>
+                <%} else {%>
+                <a href="login"><button type="submit" class="btn">Savatchaga qo'shish</button></a>
+                <%}%>
             </div>
         </div>
     </div>
@@ -389,8 +399,14 @@
             </div>
         </div>
     </section>
-
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1000,
+        once: true,
+    });
+</script>
 </body>
 </html>

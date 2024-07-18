@@ -21,6 +21,7 @@
         UserService userService = UserService.getInstance();
         HttpSession session1 = request.getSession(false);
         Integer userId = (Integer) request.getAttribute("userId");
+        @SuppressWarnings("unchecked")
         List<OrderDetails> archives = (List<OrderDetails>) request.getAttribute("archives");
         User user = userService.getUserById(userId);
         if (user != null) {

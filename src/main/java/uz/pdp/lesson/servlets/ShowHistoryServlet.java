@@ -23,13 +23,11 @@ import java.util.List;
 public class ShowHistoryServlet extends HomeServlet {
     UserService userService = UserService.getInstance();
     OrderDetailsService orderDetailsService = OrderDetailsService.getInstance();
-    CartDao cartDao = CartDao.getInstance();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
 
-    ProductService productService = ProductService.getInstance();
         List<OrderDetails> archives = null;
         try {
              archives = orderDetailsService.getArchives(userService.getUserId(user));
