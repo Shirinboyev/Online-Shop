@@ -32,8 +32,8 @@ public class OrderDetailsService {
         cartService.deleteItemsByCartId(orderDetails.getCart_id());
         productService.reduceAmountOfProductByProductId(items);
     }
-    public List<OrderDetails> getOrderDetailsByUserId(int userId) throws SQLException {
-        String sql = "SELECT * FROM order_details WHERE cart_id = ?";
+    public List<OrderDetails> getArchives(int userId) throws SQLException {
+        String sql = "SELECT * FROM order_details WHERE user_id = ?";
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, userId);
@@ -45,7 +45,7 @@ public class OrderDetailsService {
                 orderDetails.setId(resultSet.getInt("id"));
                 orderDetails.setPrice(resultSet.getDouble("price"));
                 orderDetails.setCart_id(resultSet.getInt("cart_id"));
-                orderDetails.setOrdered_date(resultSet.getTimestamp("ordered_date"));
+                orderDetails.setOrdered_date(resultSet.getTimestamp("ordered_time"));
                 orderDetailsList.add(orderDetails);
             }
             return orderDetailsList;

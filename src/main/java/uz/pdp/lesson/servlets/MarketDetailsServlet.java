@@ -75,7 +75,7 @@ public class MarketDetailsServlet extends HttpServlet {
 
         productRepo.save(product);
 
-        response.sendRedirect("marketDetails?marketId=" + marketId);
+        response.sendRedirect("/myMarkets");
     }
 
     private String encodeFileToBase64(String filePath) {

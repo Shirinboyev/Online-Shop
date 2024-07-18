@@ -92,7 +92,7 @@
         <button type="submit" class="btn btn-primary">GO TO SHOP</button>
     </form>
     <button onclick="showLogoutConfirmation()" class="btn btn-danger">Log Out</button>
-    <form action="/archives">
+    <form action="/archives" method="get">
         <button>Archive</button>
     </form>
     <div id="logoutConfirmation" class="mt-3" style="display:none;">

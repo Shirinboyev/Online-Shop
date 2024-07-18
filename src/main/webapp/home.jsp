@@ -353,17 +353,16 @@
             for (Products product : products) {
     %>
     <div class="product-card">
-        <img src="data:image/jpeg;base64,<%=product.getImageBase64()%>" alt="Image not found">
+        <img src="data:image/jpeg;base64,<%= product.getImageBase64() %>" alt="Image not found">
         <div class="product-info">
-            <h3><%= product.getName() %>
-            </h3>
+            <h3><%= product.getName() %></h3>
             <div>
-                <div class="price"><%= product.getPrice() %>$</div>
+                <div class="price"><%= product.getPrice() %> $</div>
                 <form action="${pageContext.request.contextPath}/addToCart" method="post">
                     <input type="hidden" name="productId" value="<%= product.getId() %>">
-                    <%if (user != null) {%>
+                    <% if (user != null) { %>
                     <input type="hidden" name="userId" value="<%= user.getId() %>">
-                    <%}%>
+                    <% } %>
                     <button type="submit" class="btn">Savatchaga qo'shish</button>
                 </form>
             </div>
@@ -378,7 +377,6 @@
         }
     %>
 </section>
-
 
 <footer class="footer">
     <section class="contact">

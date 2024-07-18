@@ -3,32 +3,35 @@
 <%@ page import="uz.pdp.lesson.model.products.Products" %>
 <%@ page import="uz.pdp.lesson.service.ProductService" %>
 <%@ page import="uz.pdp.lesson.model.cart.Cart" %>
+<%@ page import="uz.pdp.lesson.model.orders.OrderDetails" %>
+<%@ page import="uz.pdp.lesson.service.UserService" %>
+<%@ page import="uz.pdp.lesson.model.user.User" %>
+<%@ page import="javax.persistence.criteria.CriteriaBuilder" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Archived Products</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/archive.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/archives.css">
 </head>
 <body>
 <div class="container">
     <h1>Archived Products</h1>
     <%
-        ProductService productService = ProductService.getInstance();
-        HttpSession session1 = request.getSession();
-        Integer userId = (Integer) session1.getAttribute("userId");
-        Cart cart =  (Cart) session1.getAttribute("cart");
-
-        if (userId != null) {
-            List<Products> archivedProducts = (List<Products>) request.getAttribute("archivedProducts");
-            if (archivedProducts != null && !archivedProducts.isEmpty() && cart.isPaid()) {
+        UserService userService = UserService.getInstance();
+        HttpSession session1 = request.getSession(false);
+        Integer userId = (Integer) request.getAttribute("userId");
+        List<OrderDetails> archives = (List<OrderDetails>) request.getAttribute("archives");
+        User user = userService.getUserById(userId);
+        if (user != null) {
+            if (archives != null && !archives.isEmpty()) {
     %>
     <ul>
-        <% for (Products product : archivedProducts) { %>
+        <% for (OrderDetails order : archives) { %>
         <li>
-            <img src="data:image/jpeg;base64,<%= product.getImageBase64() %>" alt="<%= product.getName() %>">
-            <span><%= product.getName() %></span>
-            <span><%= product.getPrice() %>$</span>
+            <p>Order Date: <%= order.getOrdered_date() %>
+            </p>
+            <p>Price: <%= order.getPrice() %> UZS</p>
         </li>
         <% } %>
     </ul>

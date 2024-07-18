@@ -28,12 +28,13 @@ public class OrderDetailsRepository implements BaseRepository<OrderDetails> {
 
     @Override
     public void save(OrderDetails orderDetails) {
-        String query = "INSERT INTO order_details (price, cart_id, ordered_date) VALUES (?, ?, ?)";
+        String query = "INSERT INTO order_details (price, cart_id, ordered_time, user_id) VALUES (?, ?, ?, ?)";
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setDouble(1, orderDetails.getPrice());
             statement.setInt(2, orderDetails.getCart_id());
             statement.setTimestamp(3, orderDetails.getOrdered_date());
+            statement.setInt(4, orderDetails.getUserId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

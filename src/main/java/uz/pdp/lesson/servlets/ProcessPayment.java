@@ -61,6 +61,7 @@ public class ProcessPayment extends HttpServlet {
                             .cart_id(cart.getId())
                             .price(sum)
                             .ordered_date(Timestamp.valueOf(LocalDateTime.now()))
+                            .userId(userService.getUserId(user))
                             .build();
 
                     orderDetailsService.save(orderDetails, items);
