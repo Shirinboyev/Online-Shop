@@ -1,4 +1,4 @@
-<%@ page import="uz.pdp.lesson.model.user.User" %>
+<%@ page import="backend.model.user.User" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>

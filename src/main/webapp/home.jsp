@@ -1,7 +1,7 @@
-<%@ page import="uz.pdp.lesson.model.products.Products" %>
+<%@ page import="backend.model.products.Products" %>
 <%@ page import="java.util.List" %>
-<%@ page import="uz.pdp.lesson.model.user.User" %>
-<%@ page import="uz.pdp.lesson.repository.ProductsRepository" %>
+<%@ page import="backend.model.user.User" %>
+<%@ page import="backend.repository.ProductsRepository" %>
 <%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html lang="uz">

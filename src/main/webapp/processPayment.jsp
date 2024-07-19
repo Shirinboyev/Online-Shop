@@ -1,7 +1,7 @@
-<%@ page import="uz.pdp.lesson.model.orders.OrderDetails" %>
-<%@ page import="uz.pdp.lesson.model.user.User" %>
+<%@ page import="backend.model.orders.OrderDetails" %>
+<%@ page import="backend.model.user.User" %>
 <%@ page import="java.sql.Timestamp" %>
-<%@ page import="uz.pdp.lesson.model.cart.Cart" %><%--
+<%@ page import="backend.model.cart.Cart" %><%--
   Created by IntelliJ IDEA.
   User: sherz
   Date: 7/17/2024

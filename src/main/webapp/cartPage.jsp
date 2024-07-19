@@ -1,4 +1,4 @@
-<%@ page import="uz.pdp.lesson.model.products.Products" %>
+<%@ page import="backend.model.products.Products" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="en">

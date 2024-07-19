@@ -1,11 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="uz.pdp.lesson.model.products.Products" %>
-<%@ page import="uz.pdp.lesson.service.ProductService" %>
-<%@ page import="uz.pdp.lesson.model.cart.Cart" %>
-<%@ page import="uz.pdp.lesson.model.orders.OrderDetails" %>
-<%@ page import="uz.pdp.lesson.service.UserService" %>
-<%@ page import="uz.pdp.lesson.model.user.User" %>
+<%@ page import="backend.model.products.Products" %>
+<%@ page import="backend.service.ProductService" %>
+<%@ page import="backend.model.cart.Cart" %>
+<%@ page import="backend.model.orders.OrderDetails" %>
+<%@ page import="backend.service.UserService" %>
+<%@ page import="backend.model.user.User" %>
 <%@ page import="javax.persistence.criteria.CriteriaBuilder" %>
 <!DOCTYPE html>
 <html>

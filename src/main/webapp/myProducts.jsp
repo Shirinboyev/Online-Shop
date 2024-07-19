@@ -47,7 +47,7 @@
 </html>
 --%>
 <%@ page import="java.util.List" %>
-<%@ page import="uz.pdp.lesson.model.products.Products" %>
+<%@ page import="backend.model.products.Products" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">

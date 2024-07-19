@@ -1,6 +1,6 @@
-<%@ page import="uz.pdp.lesson.model.market.Market" %>
+<%@ page import="backend.model.market.Market" %>
 <%@ page import="java.util.List" %>
-<%@ page import="uz.pdp.lesson.model.user.User" %>
+<%@ page import="backend.model.user.User" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
